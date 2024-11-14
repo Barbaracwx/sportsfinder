@@ -1,59 +1,103 @@
-// Get form elements and userInfo section
-const submitButton = document.getElementById('submitButton');
-const userAge = document.getElementById('userAge');
-const userGender = document.getElementById('userGender');
-const userSports = document.getElementById('userSports');
-const userLocation = document.getElementById('userLocation');
-const userInfo = document.getElementById('userInfo');
-const profileForm = document.querySelector('.profile-form');
+/* Set the global font style to sans-serif */
+body {
+    font-family: Arial, Helvetica, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #ffffff;
+    color: #333;
+    font-size: 16px;
+}
 
-// Event listener for form submission
-submitButton.addEventListener('click', function () {
-    // Get selected age
-    const age = document.querySelector('input[name="age"]:checked');
-    const ageValue = age ? age.value : 'Not specified';
+/* Style the header */
+h1 {
+    text-align: center;
+    color: #444;
+    margin-top: 20px;
+}
 
-    // Get selected gender
-    const gender = document.querySelector('input[name="gender"]:checked');
-    const genderValue = gender ? gender.value : 'Not specified';
+/* Style the form container */
+.profile-form {
+    width: 90%; /* Allows the form to take up 90% of the screen width */
+    max-width: 500px; /* Sets an upper limit for the width on larger screens */
+    margin: 20px auto; /* Centers the form horizontally and gives top/bottom space */
+    background-color: #CEFBDA; /* Sets the background color to white */
+    padding: 20px; /* Adds inner padding for the content */
+    border-radius: 8px; /* Rounds the corners for a softer look */
+}
 
-    // Get selected sports and their skill levels
-    const sports = [];
-    const skillLevels = [];
-    document.querySelectorAll('input[name="sports"]:checked').forEach((checkbox) => {
-        const sport = checkbox.value;
-        sports.push(sport);
+.profile-form div {
+    display: flex;
+    align-items: center; /* Vertically aligns radio buttons/checkboxes with labels */
+    gap: 8px; /* Adds space between radio button/checkbox and label */
+    margin-bottom: 10px; /* Adds space between each option group */
+}
 
-        // Get the skill level for the selected sport
-        const skillSelect = document.getElementById(`${sport.replace(/\s/g, '').toLowerCase()}-skill`);
-        if (skillSelect && skillSelect.style.display !== 'none') {
-            const skillValue = skillSelect.value;
-            skillLevels.push(`${sport}: ${skillValue}`);
-        }
-    });
-    const sportsValue = sports.length > 0 ? sports.join(', ') : 'None';
-    const skillLevelsValue = skillLevels.length > 0 ? skillLevels.join(', ') : 'None';
+.profile-form label {
+    font-family: sans-serif; /* Applies a sans-serif font for readability */
+}
 
-    // Get selected location
-    const location = document.querySelector('input[name="location"]:checked');
-    const locationValue = location ? location.value : 'Not specified';
 
-    // Display user profile
-    userAge.textContent = `Age: ${ageValue}`;
-    userGender.textContent = `Gender: ${genderValue}`;
-    userSports.textContent = `Sports: ${sportsValue} | Skill Levels: ${skillLevelsValue}`;
-    userLocation.textContent = `Location: ${locationValue}`;
+/* Style form headings */
+h2 {
+    text-align: center;
+    color: #333;
+    margin-bottom: 20px;
+}
 
-    // Show the profile section and hide the form
-    userInfo.style.display = 'block';
-    profileForm.style.display = 'none';
-});
+/* Label and input styles */
+label {
+    font-weight: bold;
+    margin-top: 10px;
+    display: block;
+}
 
-// Show skill level dropdown when a sport is selected
-document.querySelectorAll('input[name="sports"]').forEach((checkbox) => {
-    checkbox.addEventListener('change', function () {
-        const sport = this.value.replace(/\s/g, '').toLowerCase(); // Handle spaces in sport names
-        const skillSelect = document.getElementById(`${sport}-skill`);
-        skillSelect.style.display = this.checked ? 'block' : 'none';
-    });
-});
+input[type="radio"],
+input[type="checkbox"] {
+    margin-right: 5px;
+}
+
+/* Dropdown styles for skill levels */
+select {
+    margin-top: 10px;
+    margin-bottom: 10px;
+    width: 100%;
+    padding: 8px;
+    font-size: 16px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+
+/* Style the submit button */
+button {
+    display: inline-block;
+    width: auto;
+    padding: 10px 20px;
+    font-size: 16px;
+    font-weight: bold; /* Make the text bold */
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    border-radius: 7px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+
+button:hover {
+    background-color: #0056b3;
+}
+
+/* User information display section */
+#userInfo {
+    max-width: 500px;
+    margin: 20px auto;
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+    color: #333;
+}
+
+#userInfo p {
+    margin: 10px 0;
+}
