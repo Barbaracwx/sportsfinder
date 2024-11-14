@@ -7,18 +7,33 @@
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-    <h1>Welcome to My Telegram Web App!</h1>
+    <h1>Profile Page</h1>
 
     <div class="profile-form">
         <h2>Create Your Profile</h2>
 
-        <!-- Name Input -->
-        <label for="name">What is your name?</label>
-        <input type="text" id="name" name="name" placeholder="Enter your name" required>
-
         <!-- Age Input -->
-        <label for="age">What is your age?</label>
-        <input type="number" id="age" name="age" placeholder="Enter your age" required>
+        <label for="age">What is your age range?</label>
+        <div>
+            <input type="radio" id="under18" name="age" value="Under 18">
+            <label for="under18">Under 18</label>
+        </div>
+        <div>
+            <input type="radio" id="18_24" name="age" value="18-24">
+            <label for="18_24">18-24</label>
+        </div>
+        <div>
+            <input type="radio" id="25_34" name="age" value="25-34">
+            <label for="25_34">25-34</label>
+        </div>
+        <div>
+            <input type="radio" id="35_44" name="age" value="35-44">
+            <label for="35_44">35-44</label>
+        </div>
+        <div>
+            <input type="radio" id="45plus" name="age" value="45+">
+            <label for="45plus">45+</label>
+        </div>      
 
         <!-- Gender Selection -->
         <label for="gender">What is your gender?</label>
@@ -30,9 +45,24 @@
             <input type="radio" id="female" name="gender" value="Female">
             <label for="female">Female</label>
         </div>
+
+        <!-- Sports Selection Input -->
+        <label for="sports">What sports do you play?</label>
         <div>
-            <input type="radio" id="other" name="gender" value="Other">
-            <label for="other">Other</label>
+            <input type="checkbox" id="tennis" name="sports" value="Tennis">
+            <label for="tennis">Tennis</label>
+        </div>
+        <div>
+            <input type="checkbox" id="badminton" name="sports" value="Badminton">
+            <label for="badminton">Badminton</label>
+        </div>
+        <div>
+            <input type="checkbox" id="tableTennis" name="sports" value="Table Tennis">
+            <label for="tableTennis">Table Tennis</label>
+        </div>
+        <div>
+            <input type="checkbox" id="pickleball" name="sports" value="Pickleball">
+            <label for="pickleball">Pickleball</label>
         </div>
 
         <!-- Submit Button -->
@@ -42,11 +72,45 @@
     <!-- Display User Information -->
     <div id="userInfo" style="display:none;">
         <h2>Your Profile:</h2>
-        <p id="userName"></p>
         <p id="userAge"></p>
         <p id="userGender"></p>
+        <p id="userSports"></p>
     </div>
 
-    <script src="script.js"></script>
+    <script>
+        // Get form elements and userInfo section
+        const submitButton = document.getElementById('submitButton');
+        const userAge = document.getElementById('userAge');
+        const userGender = document.getElementById('userGender');
+        const userSports = document.getElementById('userSports');
+        const userInfo = document.getElementById('userInfo');
+        
+        // Event listener for form submission
+        submitButton.addEventListener('click', function() {
+            // Get selected age
+            const age = document.querySelector('input[name="age"]:checked');
+            const ageValue = age ? age.value : 'Not specified';
+
+            // Get selected gender
+            const gender = document.querySelector('input[name="gender"]:checked');
+            const genderValue = gender ? gender.value : 'Not specified';
+
+            // Get selected sports
+            const sports = [];
+            document.querySelectorAll('input[name="sports"]:checked').forEach((checkbox) => {
+                sports.push(checkbox.value);
+            });
+            const sportsValue = sports.length > 0 ? sports.join(', ') : 'None';
+
+            // Display user profile
+            userAge.textContent = `Age: ${ageValue}`;
+            userGender.textContent = `Gender: ${genderValue}`;
+            userSports.textContent = `Sports: ${sportsValue}`;
+
+            // Show the profile section and hide the form
+            userInfo.style.display = 'block';
+            document.querySelector('.profile-form').style.display = 'none';
+        });
+    </script>
 </body>
 </html>
