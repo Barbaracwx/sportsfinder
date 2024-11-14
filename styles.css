@@ -96,6 +96,7 @@ button:hover {
     padding: 20px;
     border-radius: 8px;
     color: #333;
+    box-shadow: none; /* Remove any border or shadow */
 }
 
 #userInfo p {
