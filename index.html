@@ -1,102 +1,189 @@
-/* Set the global font style to sans-serif */
-body {
-    font-family: Arial, Helvetica, sans-serif;
-    margin: 0;
-    padding: 0;
-    background-color: #ffffff;
-    color: #333;
-    font-size: 16px;
-}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Telegram Web App - Profile</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <h1>Profile Page</h1>
 
-/* Style the header */
-h1 {
-    text-align: center;
-    color: #444;
-    margin-top: 20px;
-}
+    <div class="profile-form">
+        <h2>Create Your Profile</h2>
 
-/* Style the form container */
-.profile-form {
-    width: 90%; /* Allows the form to take up 90% of the screen width */
-    max-width: 500px; /* Sets an upper limit for the width on larger screens */
-    margin: 20px auto; /* Centers the form horizontally and gives top/bottom space */
-    background-color: #CEFBDA; /* Sets the background color to white */
-    padding: 20px; /* Adds inner padding for the content */
-    border-radius: 8px; /* Rounds the corners for a softer look */
-}
+        <!-- Age Input -->
+        <label for="age">What is your age range?</label>
+        <div>
+            <input type="radio" id="under18" name="age" value="Under 18">
+            <label for="under18">Under 18</label>
+        </div>
+        <div>
+            <input type="radio" id="18_24" name="age" value="18-24">
+            <label for="18_24">18-24</label>
+        </div>
+        <div>
+            <input type="radio" id="25_34" name="age" value="25-34">
+            <label for="25_34">25-34</label>
+        </div>
+        <div>
+            <input type="radio" id="35_44" name="age" value="35-44">
+            <label for="35_44">35-44</label>
+        </div>
+        <div>
+            <input type="radio" id="45plus" name="age" value="45+">
+            <label for="45plus">45+</label>
+        </div>      
 
-.profile-form div {
-    display: flex;
-    align-items: center; /* Vertically aligns radio buttons/checkboxes with labels */
-    gap: 8px; /* Adds space between radio button/checkbox and label */
-    margin-bottom: 10px; /* Adds space between each option group */
-}
+        <!-- Gender Selection -->
+        <label for="gender">What is your gender?</label>
+        <div>
+            <input type="radio" id="male" name="gender" value="Male">
+            <label for="male">Male</label>
+        </div>
+        <div>
+            <input type="radio" id="female" name="gender" value="Female">
+            <label for="female">Female</label>
+        </div>
 
-.profile-form label {
-    font-family: sans-serif; /* Applies a sans-serif font for readability */
-}
+        <!-- Sports Selection Input -->
+        <label for="sports">What sports do you play?</label>
+        <div>
+            <input type="checkbox" id="tennis" name="sports" value="Tennis">
+            <label for="tennis">Tennis</label>
+            <select id="tennis-skill" name="tennis-skill" style="display:none;">
+                <option value="Newbie">Newbie</option>
+                <option value="Beginner">Beginner</option>
+                <option value="Intermediate">Intermediate</option>
+                <option value="Pro">Pro</option>
+            </select>
+        </div>
+        <div>
+            <input type="checkbox" id="badminton" name="sports" value="Badminton">
+            <label for="badminton">Badminton</label>
+            <select id="badminton-skill" name="badminton-skill" style="display:none;">
+                <option value="Newbie">Newbie</option>
+                <option value="Beginner">Beginner</option>
+                <option value="Intermediate">Intermediate</option>
+                <option value="Pro">Pro</option>
+            </select>
+        </div>
+        <div>
+            <input type="checkbox" id="tabletennis" name="sports" value="TableTennis">
+            <label for="tabletennis">Table Tennis</label>
+            <select id="tabletennis-skill" name="tabletennis-skill" style="display:none;">
+                <option value="Newbie">Newbie</option>
+                <option value="Beginner">Beginner</option>
+                <option value="Intermediate">Intermediate</option>
+                <option value="Pro">Pro</option>
+            </select>
+        </div>
+        <div>
+            <input type="checkbox" id="pickleball" name="sports" value="Pickleball">
+            <label for="pickleball">Pickleball</label>
+            <select id="pickleball-skill" name="pickleball-skill" style="display:none;">
+                <option value="Newbie">Newbie</option>
+                <option value="Beginner">Beginner</option>
+                <option value="Intermediate">Intermediate</option>
+                <option value="Pro">Pro</option>
+            </select>
+        </div>
 
+        <!-- Location Selection -->
+        <label for="location">Where is your location?</label>
+        <div>
+            <input type="radio" id="north" name="location" value="North">
+            <label for="north">North</label>
+        </div>
+        <div>
+            <input type="radio" id="south" name="location" value="South">
+            <label for="south">South</label>
+        </div>
+        <div>
+            <input type="radio" id="east" name="location" value="East">
+            <label for="east">East</label>
+        </div>
+        <div>
+            <input type="radio" id="west" name="location" value="West">
+            <label for="west">West</label>
+        </div>
+        <div>
+            <input type="radio" id="central" name="location" value="Central">
+            <label for="central">Central</label>
+        </div>
 
-/* Style form headings */
-h2 {
-    text-align: center;
-    color: #333;
-    margin-bottom: 20px;
-}
+        <!-- Submit Button -->
+        <button id="submitButton">Submit Profile</button>
+    </div>
 
-/* Label and input styles */
-label {
-    font-weight: bold;
-    margin-top: 10px;
-    display: block;
-}
+    <!-- Display User Information -->
+    <div id="userInfo" style="display:none;">
+        <h2>Your Profile:</h2>
+        <p id="userAge"></p>
+        <p id="userGender"></p>
+        <p id="userSports"></p>
+        <p id="userLocation"></p>
+    </div>
 
-input[type="radio"],
-input[type="checkbox"] {
-    margin-right: 5px;
-}
+    <script>
+        // Get form elements and userInfo section
+        const submitButton = document.getElementById('submitButton');
+        const userAge = document.getElementById('userAge');
+        const userGender = document.getElementById('userGender');
+        const userSports = document.getElementById('userSports');
+        const userLocation = document.getElementById('userLocation');
+        const userInfo = document.getElementById('userInfo');
+        
+        // Event listener for form submission
+        submitButton.addEventListener('click', function() {
+            // Get selected age
+            const age = document.querySelector('input[name="age"]:checked');
+            const ageValue = age ? age.value : 'Not specified';
 
-/* Dropdown styles for skill levels */
-select {
-    margin-top: 10px;
-    margin-bottom: 10px;
-    width: 100%;
-    padding: 8px;
-    font-size: 16px;
-    border: 1px solid #ccc;
-    border-radius: 4px;
-}
+            // Get selected gender
+            const gender = document.querySelector('input[name="gender"]:checked');
+            const genderValue = gender ? gender.value : 'Not specified';
 
-/* Style the submit button */
-button {
-    display: inline-block;
-    width: auto;
-    padding: 10px 20px;
-    font-weight: bold;
-    font-size: 16px;
-    background-color: #433BFF;
-    color: #fff;
-    border: none;
-    border-radius: 8px;
-    cursor: pointer;
-    transition: background-color 0.3s ease;
-}
+            // Get selected sports and their skill levels
+            const sports = [];
+            const skillLevels = [];
+            document.querySelectorAll('input[name="sports"]:checked').forEach((checkbox) => {
+                const sport = checkbox.value;
+                sports.push(sport);
 
-button:hover {
-    background-color: #0056b3;
-}
+                // Get the skill level for the selected sport
+                const skillSelect = document.getElementById(`${sport.toLowerCase()}-skill`);
+                if (skillSelect && skillSelect.style.display !== 'none') {
+                    const skillValue = skillSelect.value;
+                    skillLevels.push(`${sport}: ${skillValue}`);
+                }
+            });
+            const sportsValue = sports.length > 0 ? sports.join(', ') : 'None';
+            const skillLevelsValue = skillLevels.length > 0 ? skillLevels.join(', ') : 'None';
 
-/* User information display section */
-#userInfo {
-    max-width: 500px;
-    margin: 20px auto;
-    background-color: #fff;
-    padding: 20px;
-    border-radius: 8px;
-    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
-    color: #333;
-}
+            // Get selected location
+            const location = document.querySelector('input[name="location"]:checked');
+            const locationValue = location ? location.value : 'Not specified';
 
-#userInfo p {
-    margin: 10px 0;
-}
+            // Display user profile
+            userAge.textContent = `Age: ${ageValue}`;
+            userGender.textContent = `Gender: ${genderValue}`;
+            userSports.textContent = `Sports: ${sportsValue} | Skill Levels: ${skillLevelsValue}`;
+            userLocation.textContent = `Location: ${locationValue}`;
+
+            // Show the profile section and hide the form
+            userInfo.style.display = 'block';
+            document.querySelector('.profile-form').style.display = 'none';
+        });
+
+        // Show skill level dropdown when a sport is selected
+        document.querySelectorAll('input[name="sports"]').forEach((checkbox) => {
+            checkbox.addEventListener('change', function() {
+                const sport = this.value.toLowerCase();
+                const skillSelect = document.getElementById(`${sport}-skill`);
+                skillSelect.style.display = this.checked ? 'block' : 'none';
+            });
+        });
+    </script>
+</body>
+</html>
