@@ -51,18 +51,42 @@
         <div>
             <input type="checkbox" id="tennis" name="sports" value="Tennis">
             <label for="tennis">Tennis</label>
+            <select id="tennis-skill" name="tennis-skill" style="display:none;">
+                <option value="Newbie">Newbie</option>
+                <option value="Beginner">Beginner</option>
+                <option value="Intermediate">Intermediate</option>
+                <option value="Pro">Pro</option>
+            </select>
         </div>
         <div>
             <input type="checkbox" id="badminton" name="sports" value="Badminton">
             <label for="badminton">Badminton</label>
+            <select id="badminton-skill" name="badminton-skill" style="display:none;">
+                <option value="Newbie">Newbie</option>
+                <option value="Beginner">Beginner</option>
+                <option value="Intermediate">Intermediate</option>
+                <option value="Pro">Pro</option>
+            </select>
         </div>
         <div>
             <input type="checkbox" id="tableTennis" name="sports" value="Table Tennis">
             <label for="tableTennis">Table Tennis</label>
+            <select id="tableTennis-skill" name="tableTennis-skill" style="display:none;">
+                <option value="Newbie">Newbie</option>
+                <option value="Beginner">Beginner</option>
+                <option value="Intermediate">Intermediate</option>
+                <option value="Pro">Pro</option>
+            </select>
         </div>
         <div>
             <input type="checkbox" id="pickleball" name="sports" value="Pickleball">
             <label for="pickleball">Pickleball</label>
+            <select id="pickleball-skill" name="pickleball-skill" style="display:none;">
+                <option value="Newbie">Newbie</option>
+                <option value="Beginner">Beginner</option>
+                <option value="Intermediate">Intermediate</option>
+                <option value="Pro">Pro</option>
+            </select>
         </div>
 
         <!-- Submit Button -->
@@ -95,21 +119,40 @@
             const gender = document.querySelector('input[name="gender"]:checked');
             const genderValue = gender ? gender.value : 'Not specified';
 
-            // Get selected sports
+            // Get selected sports and their skill levels
             const sports = [];
+            const skillLevels = [];
             document.querySelectorAll('input[name="sports"]:checked').forEach((checkbox) => {
-                sports.push(checkbox.value);
+                const sport = checkbox.value;
+                sports.push(sport);
+
+                // Get the skill level for the selected sport
+                const skillSelect = document.getElementById(`${sport.toLowerCase()}-skill`);
+                if (skillSelect && skillSelect.style.display !== 'none') {
+                    const skillValue = skillSelect.value;
+                    skillLevels.push(`${sport}: ${skillValue}`);
+                }
             });
             const sportsValue = sports.length > 0 ? sports.join(', ') : 'None';
+            const skillLevelsValue = skillLevels.length > 0 ? skillLevels.join(', ') : 'None';
 
             // Display user profile
             userAge.textContent = `Age: ${ageValue}`;
             userGender.textContent = `Gender: ${genderValue}`;
-            userSports.textContent = `Sports: ${sportsValue}`;
+            userSports.textContent = `Sports: ${sportsValue} | Skill Levels: ${skillLevelsValue}`;
 
             // Show the profile section and hide the form
             userInfo.style.display = 'block';
             document.querySelector('.profile-form').style.display = 'none';
+        });
+
+        // Show skill level dropdown when a sport is selected
+        document.querySelectorAll('input[name="sports"]').forEach((checkbox) => {
+            checkbox.addEventListener('change', function() {
+                const sport = this.value.toLowerCase();
+                const skillSelect = document.getElementById(`${sport}-skill`);
+                skillSelect.style.display = this.checked ? 'block' : 'none';
+            });
         });
     </script>
 </body>
