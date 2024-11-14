@@ -89,6 +89,29 @@
             </select>
         </div>
 
+        <!-- Location Selection -->
+        <label for="location">Where is your location?</label>
+        <div>
+            <input type="radio" id="north" name="location" value="North">
+            <label for="north">North</label>
+        </div>
+        <div>
+            <input type="radio" id="south" name="location" value="South">
+            <label for="south">South</label>
+        </div>
+        <div>
+            <input type="radio" id="east" name="location" value="East">
+            <label for="east">East</label>
+        </div>
+        <div>
+            <input type="radio" id="west" name="location" value="West">
+            <label for="west">West</label>
+        </div>
+        <div>
+            <input type="radio" id="central" name="location" value="Central">
+            <label for="central">Central</label>
+        </div>
+
         <!-- Submit Button -->
         <button id="submitButton">Submit Profile</button>
     </div>
@@ -99,6 +122,7 @@
         <p id="userAge"></p>
         <p id="userGender"></p>
         <p id="userSports"></p>
+        <p id="userLocation"></p>
     </div>
 
     <script>
@@ -107,6 +131,7 @@
         const userAge = document.getElementById('userAge');
         const userGender = document.getElementById('userGender');
         const userSports = document.getElementById('userSports');
+        const userLocation = document.getElementById('userLocation');
         const userInfo = document.getElementById('userInfo');
         
         // Event listener for form submission
@@ -136,10 +161,15 @@
             const sportsValue = sports.length > 0 ? sports.join(', ') : 'None';
             const skillLevelsValue = skillLevels.length > 0 ? skillLevels.join(', ') : 'None';
 
+            // Get selected location
+            const location = document.querySelector('input[name="location"]:checked');
+            const locationValue = location ? location.value : 'Not specified';
+
             // Display user profile
             userAge.textContent = `Age: ${ageValue}`;
             userGender.textContent = `Gender: ${genderValue}`;
             userSports.textContent = `Sports: ${sportsValue} | Skill Levels: ${skillLevelsValue}`;
+            userLocation.textContent = `Location: ${locationValue}`;
 
             // Show the profile section and hide the form
             userInfo.style.display = 'block';
