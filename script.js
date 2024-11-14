@@ -1,16 +1,20 @@
-// script.js
+// Ensure the web app is ready
 window.Telegram.WebApp.ready();
 
-// Get user data
-const user = window.Telegram.WebApp.initDataUnsafe?.user || {};
+// Function to handle the submit button click
+document.getElementById('submitButton').addEventListener('click', () => {
+    // Get the values from the form
+    const name = document.getElementById('name').value;
+    const age = document.getElementById('age').value;
+    const gender = document.querySelector('input[name="gender"]:checked')?.value || 'Not specified';
 
-// Display user name (if available)
-document.body.insertAdjacentHTML(
-  'afterbegin',
-  `<p>Hello, ${user.first_name || 'User'}!</p>`
-);
-
-// Add event listener to send a message back to the bot
-document.getElementById('sendMessageButton').addEventListener('click', () => {
-    window.Telegram.WebApp.sendData("Hello from my web app!");
+    // Display the user's information
+    if (name && age && gender) {
+        document.getElementById('userInfo').style.display = 'block';
+        document.getElementById('userName').innerText = `Name: ${name}`;
+        document.getElementById('userAge').innerText = `Age: ${age}`;
+        document.getElementById('userGender').innerText = `Gender: ${gender}`;
+    } else {
+        alert('Please fill in all fields.');
+    }
 });
