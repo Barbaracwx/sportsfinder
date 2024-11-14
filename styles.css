@@ -15,16 +15,6 @@ h1 {
     margin-top: 20px;
 }
 
-/* Style the form container */
-.profile-form {
-    max-width: 500px;
-    margin: 20px auto;
-    background-color: #fff;
-    padding: 20px;
-    border-radius: 8px;
-    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
-}
-
 /* Style form headings */
 h2 {
     text-align: center;
