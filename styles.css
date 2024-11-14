@@ -25,6 +25,17 @@ h1 {
     border-radius: 8px; /* Rounds the corners for a softer look */
 }
 
+.profile-form div {
+    display: flex;
+    align-items: center; /* Vertically aligns radio buttons/checkboxes with labels */
+    gap: 8px; /* Adds space between radio button/checkbox and label */
+    margin-bottom: 10px; /* Adds space between each option group */
+}
+
+.profile-form label {
+    font-family: sans-serif; /* Applies a sans-serif font for readability */
+}
+
 
 /* Style form headings */
 h2 {
