@@ -3,7 +3,7 @@ body {
     font-family: Arial, Helvetica, sans-serif;
     margin: 0;
     padding: 0;
-    background-color: #ffffff;
+    background-color: #d9f8e1;
     color: #333;
     font-size: 16px;
 }
@@ -20,7 +20,7 @@ h1 {
     width: 90%; /* Allows the form to take up 90% of the screen width */
     max-width: 500px; /* Sets an upper limit for the width on larger screens */
     margin: 20px auto; /* Centers the form horizontally and gives top/bottom space */
-    background-color: #CEFBDA; 
+    background-color: #d9f8e1; 
     padding: 20px; /* Adds inner padding for the content */
     border-radius: 8px; /* Rounds the corners for a softer look */
 }
@@ -67,7 +67,6 @@ select {
     border-radius: 4px;
 }
 
-/* Style the submit button */
 button {
     display: inline-block;
     width: auto;
@@ -77,9 +76,11 @@ button {
     background-color: #007bff;
     color: #fff;
     border: none;
-    border-radius: 8px;
+    border-radius: 15px;
     cursor: pointer;
     transition: background-color 0.3s ease;
+    margin: 0 auto; /* Centers the button */
+    display: block; /* Ensures the button behaves like a block element */
 }
 
 
