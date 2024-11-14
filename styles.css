@@ -15,6 +15,17 @@ h1 {
     margin-top: 20px;
 }
 
+/* Style the form container */
+.profile-form {
+    width: 90%; /* Allows the form to take up 90% of the screen width */
+    max-width: 500px; /* Sets an upper limit for the width on larger screens */
+    margin: 20px auto; /* Centers the form horizontally and gives top/bottom space */
+    background-color: #fff; /* Sets the background color to white */
+    padding: 20px; /* Adds inner padding for the content */
+    border-radius: 8px; /* Rounds the corners for a softer look */
+}
+
+
 /* Style form headings */
 h2 {
     text-align: center;
