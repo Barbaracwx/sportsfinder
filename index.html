@@ -171,10 +171,10 @@
             const locationValue = location ? location.value : 'Not specified';
 
             // Display user profile
-            userAge.textContent = `Age: ${ageValue}`;
-            userGender.textContent = `Gender: ${genderValue}`;
-            userSports.textContent = `Sports: ${sportsValue} | Skill Levels: ${skillLevelsValue}`;
-            userLocation.textContent = `Location: ${locationValue}`;
+            userAge.textContent = `${ageValue}`;
+            userGender.textContent = `${genderValue}`;
+            userSports.textContent = `${sportsValue} | ${skillLevelsValue}`;
+            userLocation.textContent = `${locationValue}`;
 
             // Show the profile section and hide the form
             userInfo.style.display = 'block';
