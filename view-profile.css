@@ -6,6 +6,12 @@ h1 {
     margin-top: 20px;
 }
 
+h3 {
+    color: black; /* Ensures text color is visible */
+    font-size: 20px; /* Ensures the text has a reasonable size */
+}
+
+
 /* Style form headings */
 h2 {
     text-align: center;
