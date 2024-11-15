@@ -27,10 +27,13 @@
         const profileData = JSON.parse(localStorage.getItem('profileData'));
 
         if (profileData) {
-            document.getElementById('userAge').textContent = profileData.age || 'Not specified';
-            document.getElementById('userGender').textContent = profileData.gender || 'Not specified';
-            document.getElementById('userSports').textContent = profileData.sports.join(', ') || 'None';
-            document.getElementById('userLocation').textContent = profileData.location || 'Not specified';
+            document.getElementById('userAge').textContent = `Age: ${profileData.age}` || 'Not specified';
+            document.getElementById('userGender').textContent = `Gender: ${profileData.gender}` || 'Not specified';
+            document.getElementById('userSports').textContent = `Sports: ${profileData.sports.join(', ')}` || 'None';
+            document.getElementById('userLocation').textContent = `Location: ${profileData.location}` || 'Not specified';
+        } else{
+            // If no profile data exists in localStorage, show a default message
+            document.getElementById('userInfo').innerHTML = '<p>No profile data found.</p>';
         }
 
         // Event listener for closing the web app

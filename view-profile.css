@@ -1,4 +1,18 @@
 /* profile.css */
+/* Style the header */
+h1 {
+    text-align: center;
+    color: #444;
+    margin-top: 20px;
+}
+
+/* Style form headings */
+h2 {
+    text-align: center;
+    color: #333;
+    margin-bottom: 20px;
+}
+
 
 /* Global font style */
 body {
@@ -8,6 +22,27 @@ body {
     background-color: #d9f8e1;
     color: #333;
     font-size: 16px;
+}
+
+/* Style the form container */
+.profile-form {
+    width: 90%; /* Allows the form to take up 90% of the screen width */
+    max-width: 500px; /* Sets an upper limit for the width on larger screens */
+    margin: 20px auto; /* Centers the form horizontally and gives top/bottom space */
+    background-color: #d9f8e1; 
+    padding: 20px; /* Adds inner padding for the content */
+    border-radius: 8px; /* Rounds the corners for a softer look */
+}
+
+.profile-form div {
+    display: flex;
+    align-items: center; /* Vertically aligns radio buttons/checkboxes with labels */
+    gap: 8px; /* Adds space between radio button/checkbox and label */
+    margin-bottom: 10px; /* Adds space between each option group */
+}
+
+.profile-form label {
+    font-family: sans-serif; /* Applies a sans-serif font for readability */
 }
 
 /* Center the profile page contents */
