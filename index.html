@@ -124,18 +124,20 @@
         <p><span class="label">Gender:</span> <span class="user-input" id="userGender"></span></p>
         <p><span class="label">Sports:</span> <span class="user-input" id="userSports"></span></p>
         <p><span class="label">Location:</span> <span class="user-input" id="userLocation"></span></p>
-    </div>
 
+        <button id="closeButton">Close</button>
+    </div>
 
     <script>
         // Get form elements and userInfo section
         const submitButton = document.getElementById('submitButton');
+        const closeButton = document.getElementById('closeButton');
         const userAge = document.getElementById('userAge');
         const userGender = document.getElementById('userGender');
         const userSports = document.getElementById('userSports');
         const userLocation = document.getElementById('userLocation');
         const userInfo = document.getElementById('userInfo');
-        
+
         // Event listener for form submission
         submitButton.addEventListener('click', function() {
             // Get selected age
@@ -185,6 +187,15 @@
                 const skillSelect = document.getElementById(`${sport}-skill`);
                 skillSelect.style.display = this.checked ? 'block' : 'none';
             });
+        });
+
+        // Event listener for closing the web app
+        closeButton.addEventListener('click', function() {
+            if (window.Telegram.WebApp) {
+                Telegram.WebApp.close();
+            } else {
+                alert("Telegram Web App API is not available.");
+            }
         });
     </script>
 </body>
