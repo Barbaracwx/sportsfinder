@@ -25,6 +25,11 @@ body {
     font-weight: bold; /* Ensure all text is bold */
     padding-top: 10px; /* Add spacing above */
     border-top: 1px solid #b7b5b5; /* Light grey line */
+    padding-bottom: 30px; /* Add padding to create separation */
+}
+
+#userInfo button {
+    margin-top: 20px; /* Space between the user information and the close button */
 }
 
 .label {
