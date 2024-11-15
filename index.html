@@ -4,7 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Telegram Web App - Profile</title>
-    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="edit-profile.css">
+    <link rel="stylesheet" href="profile.css">
 </head>
 <body>
     <h1>Profile Page</h1>
@@ -119,11 +120,12 @@
     <!-- Display User Information -->
     <div id="userInfo" style="display:none;">
         <h2>Your Profile:</h2>
-        <p id="userAge"></p>
-        <p id="userGender"></p>
-        <p id="userSports"></p>
-        <p id="userLocation"></p>
+        <p><span class="label">Age:</span> <span class="user-input" id="userAge"></span></p>
+        <p><span class="label">Gender:</span> <span class="user-input" id="userGender"></span></p>
+        <p><span class="label">Sports:</span> <span class="user-input" id="userSports"></span></p>
+        <p><span class="label">Location:</span> <span class="user-input" id="userLocation"></span></p>
     </div>
+
 
     <script>
         // Get form elements and userInfo section
