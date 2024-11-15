@@ -9,9 +9,10 @@
 </head>
 <body>
     <h1>Profile Page</h1>
+    <h3>this is the profile page</h3>
 
     <!-- Display User Information -->
-    <div id="userInfo" style="display:none;">
+    <div id="userInfo" style="display:block;">
         <h2>Your Profile:</h2>
         <p><span class="label">Age:</span> <span class="user-input" id="userAge"></span></p>
         <p><span class="label">Gender:</span> <span class="user-input" id="userGender"></span></p>
@@ -22,18 +23,24 @@
     </div>
 
     <script>
-        
         const closeButton = document.getElementById('closeButton');
+        const userInfo = document.getElementById('userInfo');
         const profileData = JSON.parse(localStorage.getItem('profileData'));
 
+        // Display the profile div
+        userInfo.style.display = 'block';
+
         if (profileData) {
-            document.getElementById('userAge').textContent = `Age: ${profileData.age}` || 'Not specified';
-            document.getElementById('userGender').textContent = `Gender: ${profileData.gender}` || 'Not specified';
-            document.getElementById('userSports').textContent = `Sports: ${profileData.sports.join(', ')}` || 'None';
-            document.getElementById('userLocation').textContent = `Location: ${profileData.location}` || 'Not specified';
-        } else{
-            // If no profile data exists in localStorage, show a default message
-            document.getElementById('userInfo').innerHTML = '<p>No profile data found.</p>';
+            // Populate user profile data
+            document.getElementById('userAge').textContent = profileData.age || 'Not specified';
+            document.getElementById('userGender').textContent = profileData.gender || 'Not specified';
+            document.getElementById('userSports').textContent = profileData.sports.length > 0 ? profileData.sports.join(', ') : 'None';
+            document.getElementById('userLocation').textContent = profileData.location || 'Not specified';
+
+            
+        } else {
+            // If no profile data exists, show a default message
+            userInfo.innerHTML = '<h2>No profile data found.</h2>';
         }
 
         // Event listener for closing the web app
@@ -44,7 +51,6 @@
                 alert("This functionality is only available when the web app is opened through Telegram.");
             }
         });
-
     </script>
 </body>
 </html>
