@@ -128,6 +128,7 @@
 
         submitButton.addEventListener('click', function() {
             // Gather input data and save it to local storage or pass to the next page
+            event.preventDefault();
             localStorage.setItem('profileData', JSON.stringify({
                 age: document.querySelector('input[name="age"]:checked').value,
                 gender: document.querySelector('input[name="gender"]:checked').value,
@@ -136,7 +137,7 @@
             }));
 
             // Redirect to the view-profile.html
-            window.location.href = 'try.html';
+            window.location.href = 'view-profile.html';
         });
 
         // Show skill level dropdown when a sport is selected
