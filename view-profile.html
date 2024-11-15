@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Telegram Web App - Profile</title>
+    <link rel="stylesheet" href="view-profile.css">
+    <script src="https://telegram.org/js/telegram-web-app.js"></script>
+</head>
+<body>
+    <h1>Profile Page</h1>
+
+    <!-- Display User Information -->
+    <div id="userInfo" style="display:none;">
+        <h2>Your Profile:</h2>
+        <p><span class="label">Age:</span> <span class="user-input" id="userAge"></span></p>
+        <p><span class="label">Gender:</span> <span class="user-input" id="userGender"></span></p>
+        <p><span class="label">Sports:</span> <span class="user-input" id="userSports"></span></p>
+        <p><span class="label">Location:</span> <span class="user-input" id="userLocation"></span></p>
+
+        <button id="closeButton">Close</button>
+    </div>
+
+    <script>
+        
+        const closeButton = document.getElementById('closeButton');
+        const profileData = JSON.parse(localStorage.getItem('profileData'));
+
+        if (profileData) {
+            document.getElementById('userAge').textContent = profileData.age || 'Not specified';
+            document.getElementById('userGender').textContent = profileData.gender || 'Not specified';
+            document.getElementById('userSports').textContent = profileData.sports.join(', ') || 'None';
+            document.getElementById('userLocation').textContent = profileData.location || 'Not specified';
+        }
+
+        // Event listener for closing the web app
+        closeButton.addEventListener('click', function() {
+            if (window.Telegram && Telegram.WebApp) {
+                Telegram.WebApp.close();
+            } else {
+                alert("This functionality is only available when the web app is opened through Telegram.");
+            }
+        });
+
+    </script>
+</body>
+</html>

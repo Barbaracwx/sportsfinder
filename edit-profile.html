@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Telegram Web App - Profile</title>
+    <link rel="stylesheet" href="edit-profile.css">
+</head>
+<body>
+    <h1>Profile Page</h1>
+
+    <div class="profile-form">
+        <h2>Create Your Profile</h2>
+
+        <!-- Age Input -->
+        <label for="age">What is your age range?</label>
+        <div>
+            <input type="radio" id="under18" name="age" value="Under 18">
+            <label for="under18">Under 18</label>
+        </div>
+        <div>
+            <input type="radio" id="18_24" name="age" value="18-24">
+            <label for="18_24">18-24</label>
+        </div>
+        <div>
+            <input type="radio" id="25_34" name="age" value="25-34">
+            <label for="25_34">25-34</label>
+        </div>
+        <div>
+            <input type="radio" id="35_44" name="age" value="35-44">
+            <label for="35_44">35-44</label>
+        </div>
+        <div>
+            <input type="radio" id="45plus" name="age" value="45+">
+            <label for="45plus">45+</label>
+        </div>      
+
+        <!-- Gender Selection -->
+        <label for="gender">What is your gender?</label>
+        <div>
+            <input type="radio" id="male" name="gender" value="Male">
+            <label for="male">Male</label>
+        </div>
+        <div>
+            <input type="radio" id="female" name="gender" value="Female">
+            <label for="female">Female</label>
+        </div>
+
+        <!-- Sports Selection Input -->
+        <label for="sports">What sports do you play?</label>
+        <div>
+            <input type="checkbox" id="tennis" name="sports" value="Tennis">
+            <label for="tennis">Tennis</label>
+            <select id="tennis-skill" name="tennis-skill" style="display:none;">
+                <option value="Newbie">Newbie</option>
+                <option value="Beginner">Beginner</option>
+                <option value="Intermediate">Intermediate</option>
+                <option value="Pro">Pro</option>
+            </select>
+        </div>
+        <div>
+            <input type="checkbox" id="badminton" name="sports" value="Badminton">
+            <label for="badminton">Badminton</label>
+            <select id="badminton-skill" name="badminton-skill" style="display:none;">
+                <option value="Newbie">Newbie</option>
+                <option value="Beginner">Beginner</option>
+                <option value="Intermediate">Intermediate</option>
+                <option value="Pro">Pro</option>
+            </select>
+        </div>
+        <div>
+            <input type="checkbox" id="tabletennis" name="sports" value="TableTennis">
+            <label for="tabletennis">Table Tennis</label>
+            <select id="tabletennis-skill" name="tabletennis-skill" style="display:none;">
+                <option value="Newbie">Newbie</option>
+                <option value="Beginner">Beginner</option>
+                <option value="Intermediate">Intermediate</option>
+                <option value="Pro">Pro</option>
+            </select>
+        </div>
+        <div>
+            <input type="checkbox" id="pickleball" name="sports" value="Pickleball">
+            <label for="pickleball">Pickleball</label>
+            <select id="pickleball-skill" name="pickleball-skill" style="display:none;">
+                <option value="Newbie">Newbie</option>
+                <option value="Beginner">Beginner</option>
+                <option value="Intermediate">Intermediate</option>
+                <option value="Pro">Pro</option>
+            </select>
+        </div>
+
+        <!-- Location Selection -->
+        <label for="location">Where is your location?</label>
+        <div>
+            <input type="radio" id="north" name="location" value="North">
+            <label for="north">North</label>
+        </div>
+        <div>
+            <input type="radio" id="south" name="location" value="South">
+            <label for="south">South</label>
+        </div>
+        <div>
+            <input type="radio" id="east" name="location" value="East">
+            <label for="east">East</label>
+        </div>
+        <div>
+            <input type="radio" id="west" name="location" value="West">
+            <label for="west">West</label>
+        </div>
+        <div>
+            <input type="radio" id="central" name="location" value="Central">
+            <label for="central">Central</label>
+        </div>
+
+        <!-- Submit Button -->
+        <button id="submitButton">Submit Profile</button>
+    </div>
+
+    <script>
+        // Get form elements and userInfo section
+        const submitButton = document.getElementById('submitButton');
+        const userAge = document.getElementById('userAge');
+        const userGender = document.getElementById('userGender');
+        const userSports = document.getElementById('userSports');
+        const userLocation = document.getElementById('userLocation');
+        const userInfo = document.getElementById('userInfo');
+
+        submitButton.addEventListener('click', function() {
+            // Gather input data and save it to local storage or pass to the next page
+            localStorage.setItem('profileData', JSON.stringify({
+                age: document.querySelector('input[name="age"]:checked').value,
+                gender: document.querySelector('input[name="gender"]:checked').value,
+                sports: Array.from(document.querySelectorAll('input[name="sports"]:checked')).map(checkbox => checkbox.value),
+                location: document.querySelector('input[name="location"]:checked').value
+            }));
+
+            // Redirect to the view-profile.html
+            window.location.href = 'view-profile.html';
+        });
+
+        // Show skill level dropdown when a sport is selected
+        document.querySelectorAll('input[name="sports"]').forEach((checkbox) => {
+            checkbox.addEventListener('change', function() {
+                const sport = this.value.toLowerCase();
+                const skillSelect = document.getElementById(`${sport}-skill`);
+                skillSelect.style.display = this.checked ? 'block' : 'none';
+            });
+        });
+
+
+    </script>
+</body>
+</html>
