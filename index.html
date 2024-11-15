@@ -6,6 +6,7 @@
     <title>Telegram Web App - Profile</title>
     <link rel="stylesheet" href="edit-profile.css">
     <link rel="stylesheet" href="profile.css">
+    <script src="https://telegram.org/js/telegram-web-app.js"></script>
 </head>
 <body>
     <h1>Profile Page</h1>
@@ -191,12 +192,13 @@
 
         // Event listener for closing the web app
         closeButton.addEventListener('click', function() {
-            if (window.Telegram.WebApp) {
+            if (window.Telegram && Telegram.WebApp) {
                 Telegram.WebApp.close();
             } else {
-                alert("Telegram Web App API is not available.");
+                alert("This functionality is only available when the web app is opened through Telegram.");
             }
         });
+
     </script>
 </body>
 </html>
