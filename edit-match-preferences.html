@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Your Match Preferences</title>
+    <link rel="stylesheet" href="edit-match-preferences.css">
+
+</head>
+<body>
+    <h1>Your Match Preferences</h1>
+    <div id="preferences-container">
+        <!-- Sports preferences will be dynamically inserted here -->
+    </div>
+
+    <script>
+        // Retrieve data from localStorage
+        const profileData = JSON.parse(localStorage.getItem('profileData'));
+
+        if (profileData && profileData.sports) {
+            const container = document.getElementById('preferences-container');
+
+            // Loop through each sport and create sections
+            profileData.sports.forEach(({ sport }) => {
+                const section = document.createElement('div');
+                section.className = 'sport-section';
+
+                // Add sport title
+                const sportTitle = document.createElement('h2');
+                sportTitle.textContent = sport;
+                section.appendChild(sportTitle);
+
+                // Add question
+                const question = document.createElement('div');
+                question.className = 'question';
+                question.textContent = 'Would you prefer to match with people in the same age range?';
+                section.appendChild(question);
+
+                // Add options
+                const options = document.createElement('div');
+                options.className = 'options';
+
+                const sameAgeLabel = document.createElement('label');
+                const sameAgeInput = document.createElement('input');
+                sameAgeInput.type = 'radio';
+                sameAgeInput.name = `${sport}-age-range`;
+                sameAgeInput.value = 'Same Age Range';
+                sameAgeLabel.appendChild(sameAgeInput);
+                sameAgeLabel.appendChild(document.createTextNode('Same Age Range'));
+                options.appendChild(sameAgeLabel);
+
+                const anyRangeLabel = document.createElement('label');
+                const anyRangeInput = document.createElement('input');
+                anyRangeInput.type = 'radio';
+                anyRangeInput.name = `${sport}-age-range`;
+                anyRangeInput.value = 'Any Range';
+                anyRangeLabel.appendChild(anyRangeInput);
+                anyRangeLabel.appendChild(document.createTextNode("I'm OK with Any Range"));
+                options.appendChild(anyRangeLabel);
+
+                section.appendChild(options);
+                container.appendChild(section);
+            });
+        } else {
+            // If no sports found, show a message
+            const message = document.createElement('p');
+            message.textContent = 'No sports preferences found. Please set up your profile.';
+            document.body.appendChild(message);
+        }
+    </script>
+</body>
+</html>
