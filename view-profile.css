@@ -85,6 +85,10 @@ button {
     box-shadow: 0px 6px 8px rgba(0, 0, 0, 0.2); /* Small shadow */
 }
 
+button:hover {
+    background-color: #0056b3;
+}
+
 .label {
     color: black; /* Labels are black */
 }
@@ -92,9 +96,5 @@ button {
 .user-input {
     color: #444; /* User input is grey */
     font-weight: bold; /* Keep user input bold */
-}
-
-#draftButton {
-    color: #150909;
 }
 
