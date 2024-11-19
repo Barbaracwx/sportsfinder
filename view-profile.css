@@ -94,3 +94,7 @@ button {
     font-weight: bold; /* Keep user input bold */
 }
 
+#draftButton {
+    color: #150909;
+}
+
