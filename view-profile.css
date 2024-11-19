@@ -65,6 +65,24 @@ body {
 
 #userInfo button {
     margin-top: 20px; /* Space between the user information and the close button */
+    
+}
+
+button {
+    display: inline-block;
+    width: auto;
+    padding: 10px 20px;
+    font-size: 16px;
+    font-weight: bold; /* Make the text bold */
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    border-radius: 50px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    margin: 0 auto; /* Centers the button */
+    display: block; /* Ensures the button behaves like a block element */
+    box-shadow: 0px 6px 8px rgba(0, 0, 0, 0.2); /* Small shadow */
 }
 
 .label {
