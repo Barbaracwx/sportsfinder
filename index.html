@@ -9,15 +9,11 @@
     // Get the query parameter
     const urlParams = new URLSearchParams(window.location.search);
     const viewProfile = urlParams.get('viewprofile');
-    const editMatchPreferences = urlParams.get('editmatchpreferences');
 
     // Redirect based on query parameters
     if (viewProfile === 'true') {
       // Redirect to the view profile page
       window.location.href = 'view-profile.html';
-    } else if (editMatchPreferences === 'true') {
-      // Redirect to the edit match preferences page
-      window.location.href = 'edit-match-preferences.html';
     } else {
       // Default: Redirect to the edit profile page
       window.location.href = 'edit-profile.html';

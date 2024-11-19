@@ -64,7 +64,7 @@ async def edit_match_preferences(update: Update, context):
         [
             InlineKeyboardButton(
                 "Edit Match Preferences",
-                web_app={'url': 'https://barbaracwx.github.io/sportsfinder/?editmatchpreferences=true'}
+                web_app={'url': 'https://barbaracwx.github.io/sportsfinder/edit-match-preferences.html'}
             )
         ]
     ]
