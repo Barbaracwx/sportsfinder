@@ -18,7 +18,6 @@
         <p><span class="label">Location:</span> <span class="user-input" id="userLocation"></span></p>
 
         <button id="closeButton">Close</button>
-        <button id="draftButton">Close</button>
 
     </div>
 
@@ -37,7 +36,15 @@
             document.getElementById('userSports').textContent = profileData.sports.length > 0 ? profileData.sports.join(', ') : 'None';
             document.getElementById('userLocation').textContent = profileData.location || 'Not specified';
 
-            
+            if (profileData.sports.length > 0) {
+                const sportsDisplay = profileData.sports
+                    .map(sport => `${sport.sport} (${sport.skill})`)
+                    .join(', ');
+                document.getElementById('userSports').textContent = sportsDisplay;
+            } else {
+                document.getElementById('userSports').textContent = 'None';
+            }
+
         } else {
             // If no profile data exists, show a default message
             userInfo.innerHTML = '<h2>No profile data found.</h2>';

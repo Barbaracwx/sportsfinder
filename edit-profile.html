@@ -126,12 +126,20 @@
         const userInfo = document.getElementById('userInfo');
 
         submitButton.addEventListener('click', function() {
-            // Gather input data and save it to local storage or pass to the next page
             event.preventDefault();
+
+            // Gather sports and their skill levels
+            const sports = Array.from(document.querySelectorAll('input[name="sports"]:checked')).map(checkbox => {
+                const sport = checkbox.value;
+                const skill = document.getElementById(`${sport.toLowerCase()}-skill`).value;
+            return { sport, skill };
+            });
+            
+            // Save data to localStorage
             localStorage.setItem('profileData', JSON.stringify({
                 age: document.querySelector('input[name="age"]:checked').value,
                 gender: document.querySelector('input[name="gender"]:checked').value,
-                sports: Array.from(document.querySelectorAll('input[name="sports"]:checked')).map(checkbox => checkbox.value),
+                sports: sports,
                 location: document.querySelector('input[name="location"]:checked').value
             }));
 
