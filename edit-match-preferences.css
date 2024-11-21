@@ -1,17 +1,38 @@
 body {
-    font-family: Arial, sans-serif;
-    margin: 20px;
-    padding: 20px;
+    font-family: Arial, Helvetica, sans-serif;
+    margin: 0; /* Reset margin */
+    padding: 0; /* Reset padding */
+    background-color: #d9f8e1;
+    display: flex; /* Use Flexbox */
+    justify-content: center; /* Center horizontally */
+    align-items: center; /* Center vertically */
+    min-height: 100vh; /* Ensure it takes the full viewport height */
 }
+
+.container {
+    background: white; /* Optional: make the container visually distinct */
+    border-radius: 8px; /* Optional: round the corners */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Optional: add a shadow */
+    padding: 20px;
+    max-width: 600px; /* Limit the container width */
+    width: 100%; /* Make it responsive */
+    text-align: center; /* Center the text inside */
+}
+
 h1 {
     color: #333;
 }
+
 .sport-section {
     margin-bottom: 20px;
 }
+
 .question {
     margin: 10px 0;
+    font-weight: bold;
 }
+
 .options {
     margin-left: 20px;
+    text-align: left; /* Align options to the left */
 }
