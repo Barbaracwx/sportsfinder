@@ -22,8 +22,6 @@ h1 {
 #preferences-display {
     border-radius: 10px;         /* Rounded corners */
     padding: 20px;               /* Padding around content */
-    background-color: #ffffff;   /* White background for contrast */
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Subtle shadow */
     max-width: 90%;              /* Prevent content from stretching too wide */
     width: 600px;                /* Fixed width for readability */
     text-align: left;            /* Left-align text inside the content */

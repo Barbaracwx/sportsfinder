@@ -10,7 +10,10 @@
     <h1>Your Match Preferences</h1>
     <div id="preferences-display"></div>
 
+    <button id="closeButton">Close</button>
+
     <script>
+        const closeButton = document.getElementById('closeButton');
         const preferences = JSON.parse(localStorage.getItem('matchPreferences'));
 
         if (preferences && preferences.length > 0) {
@@ -32,6 +35,15 @@
         } else {
             document.getElementById('preferences-display').textContent = 'No preferences found.';
         }
+
+        // Event listener for closing the web app
+        closeButton.addEventListener('click', function() {
+            if (window.Telegram && Telegram.WebApp) {
+                Telegram.WebApp.close();
+            } else {
+                alert("This functionality is only available when the web app is opened through Telegram.");
+            }
+        });
     </script>
 </body>
 </html>
