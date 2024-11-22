@@ -74,6 +74,23 @@ async def edit_match_preferences(update: Update, context):
         reply_markup=reply_markup
     )
 
+# /viewmatchpreferences command
+async def view_match_preferences(update: Update, context):
+    # Create an InlineKeyboardButton that opens the web app
+    keyboard = [
+        [
+            InlineKeyboardButton(
+                "View Match Preferences",
+                web_app={'url': 'https://barbaracwx.github.io/sportsfinder/view-match-preferences.html'}
+            )
+        ]
+    ]
+    reply_markup = InlineKeyboardMarkup(keyboard)
+    await update.message.reply_text(
+        "Click the button below to view your match preferences through the web app!",
+        reply_markup=reply_markup
+    )
+
 
 
 app = Application.builder().token(TOKEN).build()
@@ -81,5 +98,6 @@ app.add_handler(CommandHandler("start", start))
 app.add_handler(CommandHandler("editprofile", edit_profile))
 app.add_handler(CommandHandler("viewprofile", view_profile))
 app.add_handler(CommandHandler("editmatchpreferences", edit_match_preferences))
+app.add_handler(CommandHandler("viewmatchpreferences", view_match_preferences))
 
 app.run_polling()
