@@ -42,7 +42,7 @@ label {
     margin: 5px 0;
 }
 
-button {
+#submit-button {
     display: inline-block;
     width: auto;
     padding: 10px 20px;
@@ -59,6 +59,6 @@ button {
     box-shadow: 0px 6px 8px rgba(0, 0, 0, 0.2); /* Small shadow */
 }
 
-button:hover {
+#submit-button:hover {
     background-color: #0056b3;
 }
