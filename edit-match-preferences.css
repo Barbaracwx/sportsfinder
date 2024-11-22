@@ -41,3 +41,24 @@ label {
     display: block; /* Make each option appear on a new line */
     margin: 5px 0;
 }
+
+button {
+    display: inline-block;
+    width: auto;
+    padding: 10px 20px;
+    font-size: 16px;
+    font-weight: bold; /* Make the text bold */
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    border-radius: 50px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    margin: 0 auto; /* Centers the button */
+    display: block; /* Ensures the button behaves like a block element */
+    box-shadow: 0px 6px 8px rgba(0, 0, 0, 0.2); /* Small shadow */
+}
+
+button:hover {
+    background-color: #0056b3;
+}
