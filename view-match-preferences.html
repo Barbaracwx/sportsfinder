@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>View Match Preferences</title>
+    <link rel="stylesheet" href="view-match-preferences.css">
+</head>
+<body>
+    <h1>Your Match Preferences</h1>
+    <div id="preferences-display"></div>
+
+    <script>
+        const preferences = JSON.parse(localStorage.getItem('matchPreferences'));
+
+        if (preferences && preferences.length > 0) {
+            const container = document.getElementById('preferences-display');
+            preferences.forEach(pref => {
+                const section = document.createElement('div');
+                section.className = 'preference-section';
+
+                section.innerHTML = `
+                    <h2>${pref.sport}</h2>
+                    <p><strong>Age Range:</strong> ${pref.ageRange}</p>
+                    <p><strong>Gender Preference:</strong> ${pref.genderPreference}</p>
+                    <p><strong>Skill Level:</strong> ${pref.skillLevel}</p>
+                    <p><strong>Locations:</strong> ${pref.locations.join(', ') || 'No preference'}</p>
+                `;
+
+                container.appendChild(section);
+            });
+        } else {
+            document.getElementById('preferences-display').textContent = 'No preferences found.';
+        }
+    </script>
+</body>
+</html>
