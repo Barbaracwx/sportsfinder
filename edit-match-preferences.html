@@ -11,6 +11,7 @@
     <div id="preferences-container">
         <!-- Sports preferences will be dynamically inserted here -->
     </div>
+    <button id="submit-button">Submit</button>
 
     <script>
         // Retrieve data from localStorage
@@ -129,54 +130,36 @@
                 const locationOptions = document.createElement('div');
                 locationOptions.className = 'options';
 
-                const northLabel = document.createElement('label');
-                const northInput = document.createElement('input');
-                northInput.type = 'checkbox';
-                northInput.name = `${sport}-location`;
-                northInput.value = 'North';
-                northLabel.appendChild(northInput);
-                northLabel.appendChild(document.createTextNode('North'));
-                locationOptions.appendChild(northLabel);
-
-                const southLabel = document.createElement('label');
-                const southInput = document.createElement('input');
-                southInput.type = 'checkbox';
-                southInput.name = `${sport}-location`;
-                southInput.value = 'South';
-                southLabel.appendChild(southInput);
-                southLabel.appendChild(document.createTextNode('South'));
-                locationOptions.appendChild(southLabel);
-
-                const eastLabel = document.createElement('label');
-                const eastInput = document.createElement('input');
-                eastInput.type = 'checkbox';
-                eastInput.name = `${sport}-location`;
-                eastInput.value = 'East';
-                eastLabel.appendChild(eastInput);
-                eastLabel.appendChild(document.createTextNode('East'));
-                locationOptions.appendChild(eastLabel);
-
-                const westLabel = document.createElement('label');
-                const westInput = document.createElement('input');
-                westInput.type = 'checkbox';
-                westInput.name = `${sport}-location`;
-                westInput.value = 'West';
-                westLabel.appendChild(westInput);
-                westLabel.appendChild(document.createTextNode('West'));
-                locationOptions.appendChild(westLabel);
-
-                const centralLabel = document.createElement('label');
-                const centralInput = document.createElement('input');
-                centralInput.type = 'checkbox';
-                centralInput.name = `${sport}-location`;
-                centralInput.value = 'Central';
-                centralLabel.appendChild(centralInput);
-                centralLabel.appendChild(document.createTextNode('Central'));
-                locationOptions.appendChild(centralLabel);
+                const locations = ['North', 'South', 'East', 'West', 'Central'];
+                locations.forEach(location => {
+                    const label = document.createElement('label');
+                    const input = document.createElement('input');
+                    input.type = 'checkbox';
+                    input.name = `${sport}-location`;
+                    input.value = location;
+                    label.appendChild(input);
+                    label.appendChild(document.createTextNode(location));
+                    locationOptions.appendChild(label);
+                });
 
                 section.appendChild(locationOptions);
-
                 container.appendChild(section);
+            });
+
+            // Handle form submission
+            document.getElementById('submit-button').addEventListener('click', () => {
+                const preferences = profileData.sports.map(({ sport }) => {
+                    return {
+                        sport,
+                        ageRange: document.querySelector(`input[name="${sport}-age-range"]:checked`)?.value || '',
+                        genderPreference: document.querySelector(`input[name="${sport}-gender-preference"]:checked`)?.value || '',
+                        skillLevel: document.querySelector(`input[name="${sport}-skill-level"]:checked`)?.value || '',
+                        locations: Array.from(document.querySelectorAll(`input[name="${sport}-location"]:checked`)).map(el => el.value),
+                    };
+                });
+
+                localStorage.setItem('matchPreferences', JSON.stringify(preferences));
+                window.location.href = 'view-match-preferences.html';
             });
         } else {
             // If no sports found, show a message
