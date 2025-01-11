@@ -33,31 +33,35 @@
     
                 // Retrieve saved preferences for this sport
                 const savedPreference = savedPreferences.find(pref => pref.sport === sport) || {};
-    
-                // Add age range question and options
+
+                // Add age range question and slider
                 const ageRangeQuestion = document.createElement('div');
                 ageRangeQuestion.className = 'question';
-                ageRangeQuestion.textContent = 'Would you prefer to match with people in the same age range?';
+                ageRangeQuestion.textContent = 'What is your preferred age range for matching?';
                 section.appendChild(ageRangeQuestion);
-    
-                const ageRangeOptions = document.createElement('div');
-                ageRangeOptions.className = 'options';
-    
-                const ageOptions = ['Same Age Range', 'Any Range'];
-                ageOptions.forEach(option => {
-                    const label = document.createElement('label');
-                    const input = document.createElement('input');
-                    input.type = 'radio';
-                    input.name = `${sport}-age-range`;
-                    input.value = option;
-                    if (savedPreference.ageRange === option) input.checked = true;
-                    label.appendChild(input);
-                    label.appendChild(document.createTextNode(option));
-                    ageRangeOptions.appendChild(label);
+
+                const ageRangeSliderContainer = document.createElement('div');
+                ageRangeSliderContainer.className = 'slider-container';
+
+                const ageRangeSlider = document.createElement('input');
+                ageRangeSlider.type = 'range';
+                ageRangeSlider.min = 1;
+                ageRangeSlider.max = 120;
+                ageRangeSlider.value = savedPreference.ageRange || 30; // Default value can be adjusted
+                ageRangeSlider.id = `${sport}-age-range-slider`;
+                ageRangeSliderContainer.appendChild(ageRangeSlider);
+
+                const ageRangeValueDisplay = document.createElement('span');
+                ageRangeValueDisplay.textContent = ageRangeSlider.value;
+                ageRangeSliderContainer.appendChild(ageRangeValueDisplay);
+
+                // Update the displayed value as the slider is moved
+                ageRangeSlider.addEventListener('input', function () {
+                    ageRangeValueDisplay.textContent = ageRangeSlider.value;
                 });
-    
-                section.appendChild(ageRangeOptions);
-    
+
+                section.appendChild(ageRangeSliderContainer);
+
                 // Add gender preference question and options
                 const genderPreferenceQuestion = document.createElement('div');
                 genderPreferenceQuestion.className = 'question';
