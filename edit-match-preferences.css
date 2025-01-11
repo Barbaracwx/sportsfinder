@@ -63,35 +63,11 @@ label {
     background-color: #0056b3;
 }
 
-.slider-container {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-}
-
-input[type="range"] {
+.age-range-slider {
     width: 100%;
-    appearance: none;
-    height: 5px;
-    background: #007bff;
-    outline: none;
-    border-radius: 5px;
+    margin: 10px 0;
 }
 
-input[type="range"]::-webkit-slider-thumb {
-    appearance: none;
-    width: 20px;
-    height: 20px;
-    background: #0056b3;
-    border-radius: 50%;
-    cursor: pointer;
-}
 
-input[type="range"]::-moz-range-thumb {
-    width: 20px;
-    height: 20px;
-    background: #0056b3;
-    border-radius: 50%;
-    cursor: pointer;
-}
+
 
