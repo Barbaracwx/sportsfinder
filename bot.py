@@ -12,7 +12,7 @@ async def start(update: Update, context):
     keyboard = [
         [
             InlineKeyboardButton(
-                "Edit my Profile",
+                "My Profile",
                 web_app={'url': 'https://barbaracwx.github.io/sportsfinder/'}
             )
         ]
@@ -99,9 +99,9 @@ async def view_match_preferences(update: Update, context):
 
 app = Application.builder().token(TOKEN).build()
 app.add_handler(CommandHandler("start", start))
-app.add_handler(CommandHandler("editprofile", edit_profile))
+app.add_handler(CommandHandler("profile", edit_profile))
 #app.add_handler(CommandHandler("viewprofile", view_profile))
-app.add_handler(CommandHandler("editmatchpreferences", edit_match_preferences))
+app.add_handler(CommandHandler("matchpreferences", edit_match_preferences))
 #app.add_handler(CommandHandler("viewmatchpreferences", view_match_preferences))
 
 app.run_polling()
