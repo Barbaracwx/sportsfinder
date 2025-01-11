@@ -16,120 +16,105 @@
     <script>
         // Retrieve data from localStorage
         const profileData = JSON.parse(localStorage.getItem('profileData'));
-
+        const savedPreferences = JSON.parse(localStorage.getItem('matchPreferences')) || [];
+    
         if (profileData && profileData.sports) {
             const container = document.getElementById('preferences-container');
-
+    
             // Loop through each sport and create sections
             profileData.sports.forEach(({ sport }) => {
                 const section = document.createElement('div');
                 section.className = 'sport-section';
-
+    
                 // Add sport title
                 const sportTitle = document.createElement('h2');
                 sportTitle.textContent = sport;
                 section.appendChild(sportTitle);
-
-                // Add age range question
+    
+                // Retrieve saved preferences for this sport
+                const savedPreference = savedPreferences.find(pref => pref.sport === sport) || {};
+    
+                // Add age range question and options
                 const ageRangeQuestion = document.createElement('div');
                 ageRangeQuestion.className = 'question';
                 ageRangeQuestion.textContent = 'Would you prefer to match with people in the same age range?';
                 section.appendChild(ageRangeQuestion);
-
-                // Add age range options
+    
                 const ageRangeOptions = document.createElement('div');
                 ageRangeOptions.className = 'options';
-
-                const sameAgeLabel = document.createElement('label');
-                const sameAgeInput = document.createElement('input');
-                sameAgeInput.type = 'radio';
-                sameAgeInput.name = `${sport}-age-range`;
-                sameAgeInput.value = 'Same Age Range';
-                sameAgeLabel.appendChild(sameAgeInput);
-                sameAgeLabel.appendChild(document.createTextNode('Same Age Range'));
-                ageRangeOptions.appendChild(sameAgeLabel);
-
-                const anyRangeLabel = document.createElement('label');
-                const anyRangeInput = document.createElement('input');
-                anyRangeInput.type = 'radio';
-                anyRangeInput.name = `${sport}-age-range`;
-                anyRangeInput.value = 'Any Range';
-                anyRangeLabel.appendChild(anyRangeInput);
-                anyRangeLabel.appendChild(document.createTextNode("I'm OK with Any Range"));
-                ageRangeOptions.appendChild(anyRangeLabel);
-
+    
+                const ageOptions = ['Same Age Range', 'Any Range'];
+                ageOptions.forEach(option => {
+                    const label = document.createElement('label');
+                    const input = document.createElement('input');
+                    input.type = 'radio';
+                    input.name = `${sport}-age-range`;
+                    input.value = option;
+                    if (savedPreference.ageRange === option) input.checked = true;
+                    label.appendChild(input);
+                    label.appendChild(document.createTextNode(option));
+                    ageRangeOptions.appendChild(label);
+                });
+    
                 section.appendChild(ageRangeOptions);
-
-                // Add gender preference question
+    
+                // Add gender preference question and options
                 const genderPreferenceQuestion = document.createElement('div');
                 genderPreferenceQuestion.className = 'question';
                 genderPreferenceQuestion.textContent = 'Would you prefer to match with people of the same gender?';
                 section.appendChild(genderPreferenceQuestion);
-
-                // Add gender preference options
+    
                 const genderPreferenceOptions = document.createElement('div');
                 genderPreferenceOptions.className = 'options';
-
-                const sameGenderLabel = document.createElement('label');
-                const sameGenderInput = document.createElement('input');
-                sameGenderInput.type = 'radio';
-                sameGenderInput.name = `${sport}-gender-preference`;
-                sameGenderInput.value = 'Same Gender';
-                sameGenderLabel.appendChild(sameGenderInput);
-                sameGenderLabel.appendChild(document.createTextNode('Same Gender'));
-                genderPreferenceOptions.appendChild(sameGenderLabel);
-
-                const anyGenderLabel = document.createElement('label');
-                const anyGenderInput = document.createElement('input');
-                anyGenderInput.type = 'radio';
-                anyGenderInput.name = `${sport}-gender-preference`;
-                anyGenderInput.value = 'Any Gender';
-                anyGenderLabel.appendChild(anyGenderInput);
-                anyGenderLabel.appendChild(document.createTextNode("I'm OK with Any Gender"));
-                genderPreferenceOptions.appendChild(anyGenderLabel);
-
+    
+                const genderOptions = ['Same Gender', 'Any Gender'];
+                genderOptions.forEach(option => {
+                    const label = document.createElement('label');
+                    const input = document.createElement('input');
+                    input.type = 'radio';
+                    input.name = `${sport}-gender-preference`;
+                    input.value = option;
+                    if (savedPreference.genderPreference === option) input.checked = true;
+                    label.appendChild(input);
+                    label.appendChild(document.createTextNode(option));
+                    genderPreferenceOptions.appendChild(label);
+                });
+    
                 section.appendChild(genderPreferenceOptions);
-
-                // Add skill level question
+    
+                // Add skill level question and options
                 const skillLevelQuestion = document.createElement('div');
                 skillLevelQuestion.className = 'question';
                 skillLevelQuestion.textContent = 'Would you prefer to match with people of the same skill level?';
                 section.appendChild(skillLevelQuestion);
-
-                // Add skill level options
+    
                 const skillLevelOptions = document.createElement('div');
                 skillLevelOptions.className = 'options';
-
-                const sameSkillLevelLabel = document.createElement('label');
-                const sameSkillLevelInput = document.createElement('input');
-                sameSkillLevelInput.type = 'radio';
-                sameSkillLevelInput.name = `${sport}-skill-level`;
-                sameSkillLevelInput.value = 'Same Skill Level';
-                sameSkillLevelLabel.appendChild(sameSkillLevelInput);
-                sameSkillLevelLabel.appendChild(document.createTextNode('Same Skill Level'));
-                skillLevelOptions.appendChild(sameSkillLevelLabel);
-
-                const anySkillLevelLabel = document.createElement('label');
-                const anySkillLevelInput = document.createElement('input');
-                anySkillLevelInput.type = 'radio';
-                anySkillLevelInput.name = `${sport}-skill-level`;
-                anySkillLevelInput.value = 'Any Skill Level';
-                anySkillLevelLabel.appendChild(anySkillLevelInput);
-                anySkillLevelLabel.appendChild(document.createTextNode("I'm OK with Any Skill Level"));
-                skillLevelOptions.appendChild(anySkillLevelLabel);
-
+    
+                const skillOptions = ['Same Skill Level', 'Any Skill Level'];
+                skillOptions.forEach(option => {
+                    const label = document.createElement('label');
+                    const input = document.createElement('input');
+                    input.type = 'radio';
+                    input.name = `${sport}-skill-level`;
+                    input.value = option;
+                    if (savedPreference.skillLevel === option) input.checked = true;
+                    label.appendChild(input);
+                    label.appendChild(document.createTextNode(option));
+                    skillLevelOptions.appendChild(label);
+                });
+    
                 section.appendChild(skillLevelOptions);
-
-                // Add location preferences question
+    
+                // Add location preferences question and options
                 const locationQuestion = document.createElement('div');
                 locationQuestion.className = 'question';
                 locationQuestion.textContent = 'Choose preferred locations to find matches: (can choose multiple options)';
                 section.appendChild(locationQuestion);
-
-                // Add location options
+    
                 const locationOptions = document.createElement('div');
                 locationOptions.className = 'options';
-
+    
                 const locations = ['North', 'South', 'East', 'West', 'Central'];
                 locations.forEach(location => {
                     const label = document.createElement('label');
@@ -137,30 +122,31 @@
                     input.type = 'checkbox';
                     input.name = `${sport}-location`;
                     input.value = location;
+                    if (savedPreference.locations && savedPreference.locations.includes(location)) input.checked = true;
                     label.appendChild(input);
                     label.appendChild(document.createTextNode(location));
                     locationOptions.appendChild(label);
                 });
-
+    
                 section.appendChild(locationOptions);
                 container.appendChild(section);
             });
-
+    
             // Handle form submission with validation
             document.getElementById('submit-button').addEventListener('click', () => {
                 let valid = true;
-
+    
                 profileData.sports.forEach(({ sport }) => {
                     const ageRangeSelected = document.querySelector(`input[name="${sport}-age-range"]:checked`);
                     const genderPreferenceSelected = document.querySelector(`input[name="${sport}-gender-preference"]:checked`);
                     const skillLevelSelected = document.querySelector(`input[name="${sport}-skill-level"]:checked`);
                     const locationsSelected = Array.from(document.querySelectorAll(`input[name="${sport}-location"]:checked`)).length;
-
+    
                     if (!ageRangeSelected || !genderPreferenceSelected || !skillLevelSelected || locationsSelected === 0) {
                         valid = false;
                     }
                 });
-
+    
                 if (!valid) {
                     alert('Please select at least one option for each question before submitting.');
                 } else {
@@ -173,7 +159,7 @@
                             locations: Array.from(document.querySelectorAll(`input[name="${sport}-location"]:checked`)).map(el => el.value),
                         };
                     });
-
+    
                     localStorage.setItem('matchPreferences', JSON.stringify(preferences));
                     window.location.href = 'view-match-preferences.html';
                 }
@@ -185,5 +171,6 @@
             document.body.appendChild(message);
         }
     </script>
+    
 </body>
 </html>
