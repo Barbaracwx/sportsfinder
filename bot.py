@@ -12,35 +12,36 @@ async def start(update: Update, context):
     keyboard = [
         [
             InlineKeyboardButton(
-                "Edit my Profile",
+                "My Profile",
                 web_app={'url': 'https://barbaracwx.github.io/sportsfinder/'}
             )
         ]
     ]
     reply_markup = InlineKeyboardMarkup(keyboard)
     await update.message.reply_text(
-        "Hi! You can click on the button below to open up our web app - it’ll give you access to edit your profile from there!",
+        "Hi! You can click on the button below to open up our web app - it’ll give you access to view and edit your profile from there!",
         reply_markup=reply_markup
     )
 
-# /editprofile command
+# /editprofile command or new /profile
 async def edit_profile(update: Update, context):
     # Create an InlineKeyboardButton that opens the web app
     keyboard = [
         [
             InlineKeyboardButton(
-                "Edit Profile",
+                "My Profile",
                 web_app={'url': 'https://barbaracwx.github.io/sportsfinder/'}
             )
         ]
     ]
     reply_markup = InlineKeyboardMarkup(keyboard)
     await update.message.reply_text(
-        "Click the button below to edit your profile through the web app!",
+        "Click the button below to view and edit your profile through the web app!",
         reply_markup=reply_markup
     )
 
 # /viewprofile command
+'''
 async def view_profile(update: Update, context):
     # Create an InlineKeyboardButton that opens the web app
     keyboard = [
@@ -56,6 +57,7 @@ async def view_profile(update: Update, context):
         "Click the button below to view your profile through the web app!",
         reply_markup=reply_markup
     )
+'''    
 
 # /editmatchpreferences command
 async def edit_match_preferences(update: Update, context):
@@ -63,17 +65,18 @@ async def edit_match_preferences(update: Update, context):
     keyboard = [
         [
             InlineKeyboardButton(
-                "Edit Match Preferences",
+                "Match Preferences",
                 web_app={'url': 'https://barbaracwx.github.io/sportsfinder/edit-match-preferences.html'}
             )
         ]
     ]
     reply_markup = InlineKeyboardMarkup(keyboard)
     await update.message.reply_text(
-        "Click the button below to edit your match preferences through the web app!",
+        "Click the button below to view and edit your match preferences through the web app!",
         reply_markup=reply_markup
     )
 
+'''
 # /viewmatchpreferences command
 async def view_match_preferences(update: Update, context):
     # Create an InlineKeyboardButton that opens the web app
@@ -90,14 +93,15 @@ async def view_match_preferences(update: Update, context):
         "Click the button below to view your match preferences through the web app!",
         reply_markup=reply_markup
     )
+    '''
 
 
 
 app = Application.builder().token(TOKEN).build()
 app.add_handler(CommandHandler("start", start))
-app.add_handler(CommandHandler("editprofile", edit_profile))
-app.add_handler(CommandHandler("viewprofile", view_profile))
-app.add_handler(CommandHandler("editmatchpreferences", edit_match_preferences))
-app.add_handler(CommandHandler("viewmatchpreferences", view_match_preferences))
+app.add_handler(CommandHandler("profile", edit_profile))
+#app.add_handler(CommandHandler("viewprofile", view_profile))
+app.add_handler(CommandHandler("matchpreferences", edit_match_preferences))
+#app.add_handler(CommandHandler("viewmatchpreferences", view_match_preferences))
 
 app.run_polling()
