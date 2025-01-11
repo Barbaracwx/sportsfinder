@@ -10,7 +10,7 @@
     <h1>Profile Page</h1>
 
     <div class="profile-form">
-        <h2>Create Your Profile</h2>
+        <h2>Edit Your Profile</h2>
 
         <!-- Age Input -->
         <label for="age">What is your age range?</label>
@@ -33,7 +33,7 @@
         <div>
             <input type="radio" id="45plus" name="age" value="45+">
             <label for="45plus">45+</label>
-        </div>      
+        </div>
 
         <!-- Gender Selection -->
         <label for="gender">What is your gender?</label>
@@ -117,25 +117,37 @@
     </div>
 
     <script>
-        // Get form elements and userInfo section
-        const submitButton = document.getElementById('submitButton');
-        const userAge = document.getElementById('userAge');
-        const userGender = document.getElementById('userGender');
-        const userSports = document.getElementById('userSports');
-        const userLocation = document.getElementById('userLocation');
-        const userInfo = document.getElementById('userInfo');
+        // Retrieve and populate the form with stored user data
+        window.onload = function() {
+            const profileData = JSON.parse(localStorage.getItem('profileData'));
 
-        submitButton.addEventListener('click', function() {
+            if (profileData) {
+                document.querySelector(`input[name="age"][value="${profileData.age}"]`).checked = true;
+                document.querySelector(`input[name="gender"][value="${profileData.gender}"]`).checked = true;
+                profileData.sports.forEach(sportObj => {
+                    document.querySelector(`input[name="sports"][value="${sportObj.sport}"]`).checked = true;
+                    const skillSelect = document.getElementById(`${sportObj.sport.toLowerCase()}-skill`);
+                    skillSelect.style.display = 'block';
+                    skillSelect.value = sportObj.skill;
+                });
+                document.querySelector(`input[name="location"][value="${profileData.location}"]`).checked = true;
+            }
+        };
+
+        // The rest of the script remains unchanged
+        const submitButton = document.getElementById('submitButton');
+
+        submitButton.addEventListener('click', function(event) {
             event.preventDefault();
 
             // Gather sports and their skill levels
             const sports = Array.from(document.querySelectorAll('input[name="sports"]:checked')).map(checkbox => {
                 const sport = checkbox.value;
                 const skill = document.getElementById(`${sport.toLowerCase()}-skill`).value;
-            return { sport, skill };
+                return { sport, skill };
             });
-            
-            // Save data to localStorage. Simple API for storing and retrieving data. web storage api by my browser.
+
+            // Save data to localStorage
             localStorage.setItem('profileData', JSON.stringify({
                 age: document.querySelector('input[name="age"]:checked').value,
                 gender: document.querySelector('input[name="gender"]:checked').value,
@@ -155,8 +167,6 @@
                 skillSelect.style.display = this.checked ? 'block' : 'none';
             });
         });
-
-
     </script>
 </body>
 </html>
