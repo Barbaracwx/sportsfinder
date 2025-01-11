@@ -97,12 +97,26 @@
     </div>
 
     <script>
-        // Retrieve and populate the form with stored user data
+        // Function to validate the form
+        function validateForm() {
+            const ageInput = document.getElementById('age').value;
+            const genderChecked = document.querySelector('input[name="gender"]:checked');
+            const sportsChecked = document.querySelector('input[name="sports"]:checked');
+            const locationChecked = document.querySelector('input[name="location"]:checked');
+
+            if (!ageInput || !genderChecked || !sportsChecked || !locationChecked) {
+                alert('Please fill out all questions and input your age.');
+                return false;
+            }
+            return true;
+        }
+
+            // Retrieve and populate the form with stored user data
         window.onload = function() {
             const profileData = JSON.parse(localStorage.getItem('profileData'));
 
             if (profileData) {
-                document.querySelector(`input[name="age"][value="${profileData.age}"]`).checked = true;
+                document.getElementById('age').value = profileData.age;
                 document.querySelector(`input[name="gender"][value="${profileData.gender}"]`).checked = true;
                 profileData.sports.forEach(sportObj => {
                     document.querySelector(`input[name="sports"][value="${sportObj.sport}"]`).checked = true;
@@ -114,30 +128,32 @@
             }
         };
 
-        // The rest of the script remains unchanged
         const submitButton = document.getElementById('submitButton');
 
         submitButton.addEventListener('click', function(event) {
             event.preventDefault();
 
-            // Gather sports and their skill levels
-            const sports = Array.from(document.querySelectorAll('input[name="sports"]:checked')).map(checkbox => {
-                const sport = checkbox.value;
-                const skill = document.getElementById(`${sport.toLowerCase()}-skill`).value;
-                return { sport, skill };
-            });
+            // Validate form before submission
+            if (validateForm()) {
+                // Gather sports and their skill levels
+                const sports = Array.from(document.querySelectorAll('input[name="sports"]:checked')).map(checkbox => {
+                    const sport = checkbox.value;
+                    const skill = document.getElementById(`${sport.toLowerCase()}-skill`).value;
+                    return { sport, skill };
+                });
 
-            // Save data to localStorage
-            localStorage.setItem('profileData', JSON.stringify({
-                age: document.querySelector('input[name="age"]:checked').value,
-                gender: document.querySelector('input[name="gender"]:checked').value,
-                sports: sports,
-                location: document.querySelector('input[name="location"]:checked').value
-            }));
+                // Save data to localStorage
+                localStorage.setItem('profileData', JSON.stringify({
+                    age: document.getElementById('age').value,
+                    gender: document.querySelector('input[name="gender"]:checked').value,
+                    sports: sports,
+                    location: document.querySelector('input[name="location"]:checked').value
+                }));
 
-            // Redirect to the view-profile.html
-            window.location.href = 'view-profile.html';
-        });
+                // Redirect to the view-profile.html
+                window.location.href = 'view-profile.html';
+            }
+     });
 
         // Show skill level dropdown when a sport is selected
         document.querySelectorAll('input[name="sports"]').forEach((checkbox) => {
@@ -147,6 +163,15 @@
                 skillSelect.style.display = this.checked ? 'block' : 'none';
             });
         });
+        
+
     </script>
+
+
+
+
+    
+
+    
 </body>
 </html>
