@@ -11,7 +11,7 @@
     <div id="preferences-container">
         <!-- Sports preferences will be dynamically inserted here -->
     </div>
-    <button id="submit-button">Submit</button>
+    <button id="submit-button" disabled>Submit</button>
 
     <script>
         // Retrieve data from localStorage
@@ -34,7 +34,7 @@
                 // Retrieve saved preferences for this sport
                 const savedPreference = savedPreferences.find(pref => pref.sport === sport) || {};
 
-                // Add age range question and slider
+                // Add age range question and dual range slider
                 const ageRangeQuestion = document.createElement('div');
                 ageRangeQuestion.className = 'question';
                 ageRangeQuestion.textContent = 'What is your preferred age range for matching?';
@@ -43,21 +43,44 @@
                 const ageRangeSliderContainer = document.createElement('div');
                 ageRangeSliderContainer.className = 'slider-container';
 
-                const ageRangeSlider = document.createElement('input');
-                ageRangeSlider.type = 'range';
-                ageRangeSlider.min = 1;
-                ageRangeSlider.max = 120;
-                ageRangeSlider.value = savedPreference.ageRange || 30; // Default value can be adjusted
-                ageRangeSlider.id = `${sport}-age-range-slider`;
-                ageRangeSliderContainer.appendChild(ageRangeSlider);
+                // Dual range slider for minimum and maximum age
+                const minAgeSlider = document.createElement('input');
+                minAgeSlider.type = 'range';
+                minAgeSlider.min = 1;
+                minAgeSlider.max = 120;
+                minAgeSlider.value = savedPreference.minAge || 18;  // Default value
+                minAgeSlider.id = `${sport}-min-age-slider`;
+                minAgeSlider.classList.add('age-range-slider');
+                ageRangeSliderContainer.appendChild(minAgeSlider);
+
+                const maxAgeSlider = document.createElement('input');
+                maxAgeSlider.type = 'range';
+                maxAgeSlider.min = 1;
+                maxAgeSlider.max = 120;
+                maxAgeSlider.value = savedPreference.maxAge || 30;  // Default value
+                maxAgeSlider.id = `${sport}-max-age-slider`;
+                maxAgeSlider.classList.add('age-range-slider');
+                ageRangeSliderContainer.appendChild(maxAgeSlider);
 
                 const ageRangeValueDisplay = document.createElement('span');
-                ageRangeValueDisplay.textContent = ageRangeSlider.value;
+                ageRangeValueDisplay.textContent = `Age Range: ${minAgeSlider.value} - ${maxAgeSlider.value}`;
                 ageRangeSliderContainer.appendChild(ageRangeValueDisplay);
 
-                // Update the displayed value as the slider is moved
-                ageRangeSlider.addEventListener('input', function () {
-                    ageRangeValueDisplay.textContent = ageRangeSlider.value;
+                // Update the displayed value as the sliders are moved
+                minAgeSlider.addEventListener('input', function () {
+                    if (parseInt(minAgeSlider.value) > parseInt(maxAgeSlider.value)) {
+                        maxAgeSlider.value = minAgeSlider.value;
+                    }
+                    ageRangeValueDisplay.textContent = `Age Range: ${minAgeSlider.value} - ${maxAgeSlider.value}`;
+                    checkFormValidity();
+                });
+
+                maxAgeSlider.addEventListener('input', function () {
+                    if (parseInt(maxAgeSlider.value) < parseInt(minAgeSlider.value)) {
+                        minAgeSlider.value = maxAgeSlider.value;
+                    }
+                    ageRangeValueDisplay.textContent = `Age Range: ${minAgeSlider.value} - ${maxAgeSlider.value}`;
+                    checkFormValidity();
                 });
 
                 section.appendChild(ageRangeSliderContainer);
@@ -79,6 +102,7 @@
                     input.name = `${sport}-gender-preference`;
                     input.value = option;
                     if (savedPreference.genderPreference === option) input.checked = true;
+                    input.addEventListener('change', checkFormValidity);
                     label.appendChild(input);
                     label.appendChild(document.createTextNode(option));
                     genderPreferenceOptions.appendChild(label);
@@ -103,6 +127,7 @@
                     input.name = `${sport}-skill-level`;
                     input.value = option;
                     if (savedPreference.skillLevel === option) input.checked = true;
+                    input.addEventListener('change', checkFormValidity);
                     label.appendChild(input);
                     label.appendChild(document.createTextNode(option));
                     skillLevelOptions.appendChild(label);
@@ -127,6 +152,7 @@
                     input.name = `${sport}-location`;
                     input.value = location;
                     if (savedPreference.locations && savedPreference.locations.includes(location)) input.checked = true;
+                    input.addEventListener('change', checkFormValidity);
                     label.appendChild(input);
                     label.appendChild(document.createTextNode(location));
                     locationOptions.appendChild(label);
@@ -136,45 +162,75 @@
                 container.appendChild(section);
             });
     
-            // Handle form submission with validation
-            document.getElementById('submit-button').addEventListener('click', () => {
+            // Check form validity based on all questions and sliders
+            function checkFormValidity() {
                 let valid = true;
     
                 profileData.sports.forEach(({ sport }) => {
-                    const ageRangeSelected = document.querySelector(`input[name="${sport}-age-range"]:checked`);
+                    const minAgeSlider = document.querySelector(`#${sport}-min-age-slider`);
+                    const maxAgeSlider = document.querySelector(`#${sport}-max-age-slider`);
                     const genderPreferenceSelected = document.querySelector(`input[name="${sport}-gender-preference"]:checked`);
                     const skillLevelSelected = document.querySelector(`input[name="${sport}-skill-level"]:checked`);
                     const locationsSelected = Array.from(document.querySelectorAll(`input[name="${sport}-location"]:checked`)).length;
     
-                    if (!ageRangeSelected || !genderPreferenceSelected || !skillLevelSelected || locationsSelected === 0) {
+                    // Check if all options are selected
+                    if (!minAgeSlider.value || !maxAgeSlider.value || !genderPreferenceSelected || !skillLevelSelected || locationsSelected === 0) {
                         valid = false;
                     }
                 });
     
+                // Enable/Disable submit button
+                document.getElementById('submit-button').disabled = !valid;
+            }
+            
+            // Handle form submission
+            document.getElementById('submit-button').addEventListener('click', () => {
+                let valid = true;
+
+                profileData.sports.forEach(({ sport }) => {
+                    const minAgeSlider = document.querySelector(`#${sport}-min-age-slider`);
+                    const maxAgeSlider = document.querySelector(`#${sport}-max-age-slider`);
+                    const genderPreferenceSelected = document.querySelector(`input[name="${sport}-gender-preference"]:checked`);
+                    const skillLevelSelected = document.querySelector(`input[name="${sport}-skill-level"]:checked`);
+                    const locationsSelected = Array.from(document.querySelectorAll(`input[name="${sport}-location"]:checked`)).length > 0;
+
+                    if (!minAgeSlider.value || !maxAgeSlider.value || !genderPreferenceSelected || !skillLevelSelected || locationsSelected === 0) {
+                        valid = false;
+                    }
+                });
+
                 if (!valid) {
                     alert('Please select at least one option for each question before submitting.');
                 } else {
                     const preferences = profileData.sports.map(({ sport }) => {
                         return {
                             sport,
-                            ageRange: document.querySelector(`input[name="${sport}-age-range"]:checked`)?.value || '',
+                            minAge: document.querySelector(`#${sport}-min-age-slider`).value || '',
+                            maxAge: document.querySelector(`#${sport}-max-age-slider`).value || '',
                             genderPreference: document.querySelector(`input[name="${sport}-gender-preference"]:checked`)?.value || '',
                             skillLevel: document.querySelector(`input[name="${sport}-skill-level"]:checked`)?.value || '',
                             locations: Array.from(document.querySelectorAll(`input[name="${sport}-location"]:checked`)).map(el => el.value),
                         };
                     });
-    
+
                     localStorage.setItem('matchPreferences', JSON.stringify(preferences));
-                    window.location.href = 'view-match-preferences.html';
+                }
+
+                if (window.Telegram && Telegram.WebApp) {
+                    Telegram.WebApp.close();
+                } else {
+                    alert("This functionality is only available when the web app is opened through Telegram.");
                 }
             });
+
         } else {
             // If no sports found, show a message
             const message = document.createElement('p');
             message.textContent = 'No sports preferences found. Please set up your profile.';
             document.body.appendChild(message);
         }
+
+
     </script>
-    
 </body>
 </html>
