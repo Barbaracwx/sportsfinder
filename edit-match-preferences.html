@@ -34,66 +34,67 @@
                 // Retrieve saved preferences for this sport
                 const savedPreference = savedPreferences.find(pref => pref.sport === sport) || {};
 
-                // Add age range question and dual range slider
+                // Add age range question and input fields
                 const ageRangeQuestion = document.createElement('div');
                 ageRangeQuestion.className = 'question';
                 ageRangeQuestion.textContent = 'What is your preferred age range for matching?';
                 section.appendChild(ageRangeQuestion);
 
-                const ageRangeSliderContainer = document.createElement('div');
-                ageRangeSliderContainer.className = 'slider-container';
+                const ageRangeInputContainer = document.createElement('div');
+                ageRangeInputContainer.className = 'input-container';
 
-                // Dual range slider for minimum and maximum age
-                const minAgeSlider = document.createElement('input');
-                minAgeSlider.type = 'range';
-                minAgeSlider.min = 1;
-                minAgeSlider.max = 120;
-                minAgeSlider.value = savedPreference.minAge || 18;  // Default value
-                minAgeSlider.id = `${sport}-min-age-slider`;
-                minAgeSlider.classList.add('age-range-slider');
-                ageRangeSliderContainer.appendChild(minAgeSlider);
+                // Minimum age input
+                const minAgeInput = document.createElement('input');
+                minAgeInput.type = 'number';
+                minAgeInput.min = 1;
+                minAgeInput.max = 120;
+                minAgeInput.value = savedPreference.minAge || 18; // Default value
+                minAgeInput.id = `${sport}-min-age-input`;
+                minAgeInput.classList.add('age-range-input');
+                ageRangeInputContainer.appendChild(minAgeInput);
 
-                const maxAgeSlider = document.createElement('input');
-                maxAgeSlider.type = 'range';
-                maxAgeSlider.min = 1;
-                maxAgeSlider.max = 120;
-                maxAgeSlider.value = savedPreference.maxAge || 30;  // Default value
-                maxAgeSlider.id = `${sport}-max-age-slider`;
-                maxAgeSlider.classList.add('age-range-slider');
-                ageRangeSliderContainer.appendChild(maxAgeSlider);
+                // Maximum age input
+                const maxAgeInput = document.createElement('input');
+                maxAgeInput.type = 'number';
+                maxAgeInput.min = 1;
+                maxAgeInput.max = 120;
+                maxAgeInput.value = savedPreference.maxAge || 30; // Default value
+                maxAgeInput.id = `${sport}-max-age-input`;
+                maxAgeInput.classList.add('age-range-input');
+                ageRangeInputContainer.appendChild(maxAgeInput);
 
                 const ageRangeValueDisplay = document.createElement('span');
-                ageRangeValueDisplay.textContent = `Age Range: ${minAgeSlider.value} - ${maxAgeSlider.value}`;
-                ageRangeSliderContainer.appendChild(ageRangeValueDisplay);
+                ageRangeValueDisplay.textContent = `Age Range: ${minAgeInput.value} - ${maxAgeInput.value}`;
+                ageRangeInputContainer.appendChild(ageRangeValueDisplay);
 
-                // Update the displayed value as the sliders are moved
-                minAgeSlider.addEventListener('input', function () {
-                    if (parseInt(minAgeSlider.value) > parseInt(maxAgeSlider.value)) {
-                        maxAgeSlider.value = minAgeSlider.value;
+                // Update the displayed value as the inputs are changed
+                minAgeInput.addEventListener('input', function () {
+                    if (parseInt(minAgeInput.value) > parseInt(maxAgeInput.value)) {
+                        maxAgeInput.value = minAgeInput.value;
                     }
-                    ageRangeValueDisplay.textContent = `Age Range: ${minAgeSlider.value} - ${maxAgeSlider.value}`;
+                    ageRangeValueDisplay.textContent = `Age Range: ${minAgeInput.value} - ${maxAgeInput.value}`;
                     checkFormValidity();
                 });
 
-                maxAgeSlider.addEventListener('input', function () {
-                    if (parseInt(maxAgeSlider.value) < parseInt(minAgeSlider.value)) {
-                        minAgeSlider.value = maxAgeSlider.value;
+                maxAgeInput.addEventListener('input', function () {
+                    if (parseInt(maxAgeInput.value) < parseInt(minAgeInput.value)) {
+                        minAgeInput.value = maxAgeInput.value;
                     }
-                    ageRangeValueDisplay.textContent = `Age Range: ${minAgeSlider.value} - ${maxAgeSlider.value}`;
+                    ageRangeValueDisplay.textContent = `Age Range: ${minAgeInput.value} - ${maxAgeInput.value}`;
                     checkFormValidity();
                 });
 
-                section.appendChild(ageRangeSliderContainer);
+                section.appendChild(ageRangeInputContainer);
 
                 // Add gender preference question and options
                 const genderPreferenceQuestion = document.createElement('div');
                 genderPreferenceQuestion.className = 'question';
                 genderPreferenceQuestion.textContent = 'Would you prefer to match with people of the same gender?';
                 section.appendChild(genderPreferenceQuestion);
-    
+
                 const genderPreferenceOptions = document.createElement('div');
                 genderPreferenceOptions.className = 'options';
-    
+
                 const genderOptions = ['Same Gender', 'Any Gender'];
                 genderOptions.forEach(option => {
                     const label = document.createElement('label');
@@ -107,18 +108,18 @@
                     label.appendChild(document.createTextNode(option));
                     genderPreferenceOptions.appendChild(label);
                 });
-    
+
                 section.appendChild(genderPreferenceOptions);
-    
+
                 // Add skill level question and options
                 const skillLevelQuestion = document.createElement('div');
                 skillLevelQuestion.className = 'question';
                 skillLevelQuestion.textContent = 'Would you prefer to match with people of the same skill level?';
                 section.appendChild(skillLevelQuestion);
-    
+
                 const skillLevelOptions = document.createElement('div');
                 skillLevelOptions.className = 'options';
-    
+
                 const skillOptions = ['Same Skill Level', 'Any Skill Level'];
                 skillOptions.forEach(option => {
                     const label = document.createElement('label');
@@ -132,18 +133,18 @@
                     label.appendChild(document.createTextNode(option));
                     skillLevelOptions.appendChild(label);
                 });
-    
+
                 section.appendChild(skillLevelOptions);
-    
+
                 // Add location preferences question and options
                 const locationQuestion = document.createElement('div');
                 locationQuestion.className = 'question';
                 locationQuestion.textContent = 'Choose preferred locations to find matches: (can choose multiple options)';
                 section.appendChild(locationQuestion);
-    
+
                 const locationOptions = document.createElement('div');
                 locationOptions.className = 'options';
-    
+
                 const locations = ['North', 'South', 'East', 'West', 'Central'];
                 locations.forEach(location => {
                     const label = document.createElement('label');
@@ -157,77 +158,76 @@
                     label.appendChild(document.createTextNode(location));
                     locationOptions.appendChild(label);
                 });
-    
+
                 section.appendChild(locationOptions);
                 container.appendChild(section);
             });
-    
-            // Check form validity based on all questions and sliders
+
+            //check form validity based on all questions
             function checkFormValidity() {
                 let valid = true;
-    
+
                 profileData.sports.forEach(({ sport }) => {
-                    const minAgeSlider = document.querySelector(`#${sport}-min-age-slider`);
-                    const maxAgeSlider = document.querySelector(`#${sport}-max-age-slider`);
+                    const minAgeInput = document.querySelector(`#${sport}-min-age-input`);
+                    const maxAgeInput = document.querySelector(`#${sport}-max-age-input`);
                     const genderPreferenceSelected = document.querySelector(`input[name="${sport}-gender-preference"]:checked`);
                     const skillLevelSelected = document.querySelector(`input[name="${sport}-skill-level"]:checked`);
                     const locationsSelected = Array.from(document.querySelectorAll(`input[name="${sport}-location"]:checked`)).length;
-    
-                    // Check if all options are selected
-                    if (!minAgeSlider.value || !maxAgeSlider.value || !genderPreferenceSelected || !skillLevelSelected || locationsSelected === 0) {
+
+                    // Check if all fields have valid values
+                    if (
+                        !minAgeInput.value ||
+                        !maxAgeInput.value ||
+                        isNaN(minAgeInput.value) ||
+                        isNaN(maxAgeInput.value) ||
+                        parseInt(minAgeInput.value) <= 0 ||
+                        parseInt(maxAgeInput.value) <= 0 ||
+                        !genderPreferenceSelected ||
+                        !skillLevelSelected ||
+                        locationsSelected === 0
+                    ) {
                         valid = false;
                     }
                 });
-    
+
                 // Enable/Disable submit button
                 document.getElementById('submit-button').disabled = !valid;
             }
-            
-            // Handle form submission
-            document.getElementById('submit-button').addEventListener('click', () => {
-                let valid = true;
 
-                profileData.sports.forEach(({ sport }) => {
-                    const minAgeSlider = document.querySelector(`#${sport}-min-age-slider`);
-                    const maxAgeSlider = document.querySelector(`#${sport}-max-age-slider`);
-                    const genderPreferenceSelected = document.querySelector(`input[name="${sport}-gender-preference"]:checked`);
-                    const skillLevelSelected = document.querySelector(`input[name="${sport}-skill-level"]:checked`);
-                    const locationsSelected = Array.from(document.querySelectorAll(`input[name="${sport}-location"]:checked`)).length > 0;
+            // Initial check to enable the submit button if the form is valid with default values
+            checkFormValidity();
 
-                    if (!minAgeSlider.value || !maxAgeSlider.value || !genderPreferenceSelected || !skillLevelSelected || locationsSelected === 0) {
-                        valid = false;
-                    }
-                });
-
-                if (!valid) {
-                    alert('Please select at least one option for each question before submitting.');
-                } else {
-                    const preferences = profileData.sports.map(({ sport }) => {
-                        return {
-                            sport,
-                            minAge: document.querySelector(`#${sport}-min-age-slider`).value || '',
-                            maxAge: document.querySelector(`#${sport}-max-age-slider`).value || '',
-                            genderPreference: document.querySelector(`input[name="${sport}-gender-preference"]:checked`)?.value || '',
-                            skillLevel: document.querySelector(`input[name="${sport}-skill-level"]:checked`)?.value || '',
-                            locations: Array.from(document.querySelectorAll(`input[name="${sport}-location"]:checked`)).map(el => el.value),
-                        };
-                    });
-
-                    localStorage.setItem('matchPreferences', JSON.stringify(preferences));
-                    window.location.href = 'view-match-preferences.html';
-
-                }
-
+            // Attach event listeners for checking validity
+            document.querySelectorAll('input').forEach(input => {
+                input.addEventListener('input', checkFormValidity);
             });
 
+
+
+
+
+            // Handle form submission
+            document.getElementById('submit-button').addEventListener('click', () => {
+                const preferences = profileData.sports.map(({ sport }) => {
+                    return {
+                        sport,
+                        minAge: document.querySelector(`#${sport}-min-age-input`).value || '',
+                        maxAge: document.querySelector(`#${sport}-max-age-input`).value || '',
+                        genderPreference: document.querySelector(`input[name="${sport}-gender-preference"]:checked`)?.value || '',
+                        skillLevel: document.querySelector(`input[name="${sport}-skill-level"]:checked`)?.value || '',
+                        locations: Array.from(document.querySelectorAll(`input[name="${sport}-location"]:checked`)).map(el => el.value),
+                    };
+                });
+
+                localStorage.setItem('matchPreferences', JSON.stringify(preferences));
+                window.location.href = 'view-match-preferences.html';
+            });
         } else {
             // If no sports found, show a message
             const message = document.createElement('p');
             message.textContent = 'No sports preferences found. Please set up your profile.';
             document.body.appendChild(message);
         }
-
-
     </script>
 </body>
 </html>

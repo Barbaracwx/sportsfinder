@@ -63,10 +63,12 @@ label {
     background-color: #0056b3;
 }
 
-.age-range-slider {
-    width: 100%;
-    margin: 10px 0;
+.input-container {
+    display: flex;
+    gap: 10px; /* This creates space between the child elements */
+    align-items: center;
 }
+
 
 
 
