@@ -65,7 +65,7 @@ label {
 
 .input-container {
     display: flex;
-    gap: 10px; /* This creates space between the child elements */
+    gap: 30px; /* This creates space between the child elements */
     align-items: center;
 }
 
