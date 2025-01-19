@@ -103,36 +103,19 @@
             const genderChecked = document.querySelector('input[name="gender"]:checked');
             const sportsChecked = document.querySelector('input[name="sports"]:checked');
             const locationChecked = document.querySelector('input[name="location"]:checked');
-
+    
             if (!ageInput || !genderChecked || !sportsChecked || !locationChecked) {
                 alert('Please fill out all questions and input your age.');
                 return false;
             }
             return true;
         }
-
-            // Retrieve and populate the form with stored user data
-        window.onload = function() {
-            const profileData = JSON.parse(localStorage.getItem('profileData'));
-
-            if (profileData) {
-                document.getElementById('age').value = profileData.age;
-                document.querySelector(`input[name="gender"][value="${profileData.gender}"]`).checked = true;
-                profileData.sports.forEach(sportObj => {
-                    document.querySelector(`input[name="sports"][value="${sportObj.sport}"]`).checked = true;
-                    const skillSelect = document.getElementById(`${sportObj.sport.toLowerCase()}-skill`);
-                    skillSelect.style.display = 'block';
-                    skillSelect.value = sportObj.skill;
-                });
-                document.querySelector(`input[name="location"][value="${profileData.location}"]`).checked = true;
-            }
-        };
-
+    
         const submitButton = document.getElementById('submitButton');
-
+    
         submitButton.addEventListener('click', function(event) {
             event.preventDefault();
-
+    
             // Validate form before submission
             if (validateForm()) {
                 // Gather sports and their skill levels
@@ -141,7 +124,7 @@
                     const skill = document.getElementById(`${sport.toLowerCase()}-skill`).value;
                     return { sport, skill };
                 });
-
+    
                 // Save data to localStorage
                 localStorage.setItem('profileData', JSON.stringify({
                     age: document.getElementById('age').value,
@@ -149,12 +132,16 @@
                     sports: sports,
                     location: document.querySelector('input[name="location"]:checked').value
                 }));
-
-                // Redirect to the view-profile.html
-                window.location.href = 'view-profile.html';
+    
+                // Close the Telegram Web App
+                if (window.Telegram && Telegram.WebApp) {
+                    Telegram.WebApp.close();
+                } else {
+                    alert("This functionality is only available when the web app is opened through Telegram.");
+                }
             }
-     });
-
+        });
+    
         // Show skill level dropdown when a sport is selected
         document.querySelectorAll('input[name="sports"]').forEach((checkbox) => {
             checkbox.addEventListener('change', function() {
@@ -163,9 +150,12 @@
                 skillSelect.style.display = this.checked ? 'block' : 'none';
             });
         });
-        
-
     </script>
+    
+
+
+
+
 
 
 
