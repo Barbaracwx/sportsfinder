@@ -103,12 +103,9 @@
 
         // Event listener for closing the web app
         closeButton.addEventListener('click', function() {
-            if (window.Telegram && Telegram.WebApp) {
-                Telegram.WebApp.close();
-            } else {
-                alert("This functionality is only available when the web app is opened through Telegram.");
-            }
+            Telegram.WebApp.close();
         });
+
     
         // Show skill level dropdown when a sport is selected
         document.querySelectorAll('input[name="sports"]').forEach((checkbox) => {
