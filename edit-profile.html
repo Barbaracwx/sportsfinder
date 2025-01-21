@@ -98,13 +98,10 @@
 
     <script>
 
-        // Initialize Telegram Web App
-        if (window.Telegram) {
-            Telegram.WebApp.ready();
-        }
-
-        // Event listener for closing the web app
-        document.getElementById('submitButton').addEventListener('click', function() {
+        document.getElementById('submitButton').addEventListener('click', function (event) {
+            // Prevent the form from submitting normally
+            event.preventDefault();
+    
             if (window.Telegram && Telegram.WebApp) {
                 console.log("Attempting to close the web app.");
                 Telegram.WebApp.close();
