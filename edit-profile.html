@@ -94,19 +94,19 @@
 
         <!-- Submit Button -->
         <button id="submitButton">Submit Profile</button>
+
+        <button id="closeButton">Close</button>
     </div>
 
     <script>
+        const closeButton = document.getElementById('closeButton');
 
-        document.getElementById('submitButton').addEventListener('click', function (event) {
-            // Prevent the form from submitting normally
-            event.preventDefault();
-    
+        // Event listener for closing the web app
+        closeButton.addEventListener('click', function() {
             if (window.Telegram && Telegram.WebApp) {
-                console.log("Attempting to close the web app.");
                 Telegram.WebApp.close();
             } else {
-                console.log("Telegram WebApp object not found.");
+                alert("This functionality is only available when the web app is opened through Telegram.");
             }
         });
     
