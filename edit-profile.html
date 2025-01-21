@@ -125,7 +125,7 @@
                     return { sport, skill };
                 });
     
-                // Save data to localStorage
+                // Save data to localStorage or send to your server
                 localStorage.setItem('profileData', JSON.stringify({
                     age: document.getElementById('age').value,
                     gender: document.querySelector('input[name="gender"]:checked').value,
@@ -151,16 +151,6 @@
             });
         });
     </script>
-    
-
-
-
-
-
-
-
-
-    
 
     
 </body>
