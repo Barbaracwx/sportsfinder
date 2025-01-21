@@ -98,12 +98,18 @@
 
     <script>
 
+        // Initialize Telegram Web App
+        if (window.Telegram) {
+            Telegram.WebApp.ready();
+        }
+
         // Event listener for closing the web app
         document.getElementById('submitButton').addEventListener('click', function() {
             if (window.Telegram && Telegram.WebApp) {
+                console.log("Attempting to close the web app.");
                 Telegram.WebApp.close();
             } else {
-                alert("This functionality is only available when the web app is opened through Telegram.");
+                console.log("Telegram WebApp object not found.");
             }
         });
     
