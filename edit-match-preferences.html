@@ -70,6 +70,9 @@
 
                 // Update the displayed value as the inputs are changed
                 minAgeInput.addEventListener('input', function () {
+                    if (minAgeInput.value < 1) {
+                        minAgeInput.value = 1;
+                    }
                     if (parseInt(minAgeInput.value) > parseInt(maxAgeInput.value)) {
                         maxAgeInput.value = minAgeInput.value;
                     }
@@ -78,6 +81,11 @@
                 });
 
                 maxAgeInput.addEventListener('input', function () {
+                    if (maxAgeInput.value < 1) {
+                        maxAgeInput.value = 1;
+                    } else if (maxAgeInput.value > 120) {
+                        maxAgeInput.value = 120;  // Reset to 120 if it exceeds 120
+                    }
                     if (parseInt(maxAgeInput.value) < parseInt(minAgeInput.value)) {
                         minAgeInput.value = maxAgeInput.value;
                     }
