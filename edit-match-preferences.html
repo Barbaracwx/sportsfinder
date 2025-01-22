@@ -167,11 +167,12 @@
                 container.appendChild(section);
             });
 
-            // Handle form submission
-            document.getElementById('submit-button').addEventListener('click', () => {
-                let valid = true;
-                let missingFields = false;
+            // Enable submit button if all fields are filled
+            const submitButton = document.getElementById('submit-button');
+            submitButton.disabled = !isValidForm();
 
+            function isValidForm() {
+                let valid = true;
                 profileData.sports.forEach(({ sport }) => {
                     const minAgeInput = document.querySelector(`#${sport}-min-age-input`);
                     const maxAgeInput = document.querySelector(`#${sport}-max-age-input`);
@@ -179,7 +180,7 @@
                     const skillLevelSelected = document.querySelector(`input[name="${sport}-skill-level"]:checked`);
                     const locationsSelected = Array.from(document.querySelectorAll(`input[name="${sport}-location"]:checked`)).length;
 
-                    // Check if all fields have valid values
+                    // Validate all fields
                     if (
                         !minAgeInput.value ||
                         !maxAgeInput.value ||
@@ -192,13 +193,14 @@
                         locationsSelected === 0
                     ) {
                         valid = false;
-                        missingFields = true;
                     }
                 });
+                return valid;
+            }
 
-                if (missingFields) {
-                    alert("Please fill in all fields before submitting!");
-                } else {
+            // Handle form submission
+            submitButton.addEventListener('click', () => {
+                if (isValidForm()) {
                     const preferences = profileData.sports.map(({ sport }) => {
                         return {
                             sport,
@@ -217,6 +219,8 @@
                     } else {
                         alert("This functionality is only available when the web app is opened through Telegram.");
                     }
+                } else {
+                    alert("Please fill in all fields before submitting!");
                 }
             });
         } else {
