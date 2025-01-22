@@ -93,21 +93,55 @@
             <label for="central">Central</label>
         </div>
 
-        <button id="closeButton">Close</button>
+        <!-- Submit Button -->
+        <button id="submitButton">Submit Profile</button>
     </div>
 
     <script>
-        const closeButton = document.getElementById('closeButton');
-
-        // Event listener for closing the web app
-        closeButton.addEventListener('click', function() {
-            if (window.Telegram && Telegram.WebApp) {
-                Telegram.WebApp.close();
-            } else {
-                alert("This functionality is only available when the web app is opened through Telegram.");
+        // Function to validate the form
+        function validateForm() {
+            const ageInput = document.getElementById('age').value;
+            const genderChecked = document.querySelector('input[name="gender"]:checked');
+            const sportsChecked = document.querySelector('input[name="sports"]:checked');
+            const locationChecked = document.querySelector('input[name="location"]:checked');
+    
+            if (!ageInput || !genderChecked || !sportsChecked || !locationChecked) {
+                alert('Please fill out all questions and input your age.');
+                return false;
+            }
+            return true;
+        }
+    
+        const submitButton = document.getElementById('submitButton');
+    
+        submitButton.addEventListener('click', function(event) {
+            event.preventDefault();
+    
+            // Validate form before submission
+            if (validateForm()) {
+                // Gather sports and their skill levels
+                const sports = Array.from(document.querySelectorAll('input[name="sports"]:checked')).map(checkbox => {
+                    const sport = checkbox.value;
+                    const skill = document.getElementById(`${sport.toLowerCase()}-skill`).value;
+                    return { sport, skill };
+                });
+    
+                // Save data to localStorage
+                localStorage.setItem('profileData', JSON.stringify({
+                    age: document.getElementById('age').value,
+                    gender: document.querySelector('input[name="gender"]:checked').value,
+                    sports: sports,
+                    location: document.querySelector('input[name="location"]:checked').value
+                }));
+    
+                // Close the Telegram Web App
+                if (window.Telegram && Telegram.WebApp) {
+                    Telegram.WebApp.close();
+                } else {
+                    alert("This functionality is only available when the web app is opened through Telegram.");
+                }
             }
         });
-
     
         // Show skill level dropdown when a sport is selected
         document.querySelectorAll('input[name="sports"]').forEach((checkbox) => {
@@ -118,7 +152,6 @@
             });
         });
     </script>
-
     
 </body>
 </html>
