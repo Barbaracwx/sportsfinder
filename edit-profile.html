@@ -101,12 +101,19 @@
         // Function to validate the form
         function validateForm() {
             const ageInput = document.getElementById('age').value;
+            const age = parseInt(ageInput, 10);
+    
+            if (!ageInput || age < 1 || age > 120) {
+                alert('Please enter a valid age between 1 and 120.');
+                return false;
+            }
+    
             const genderChecked = document.querySelector('input[name="gender"]:checked');
             const sportsChecked = document.querySelector('input[name="sports"]:checked');
             const locationChecked = document.querySelector('input[name="location"]:checked');
     
-            if (!ageInput || !genderChecked || !sportsChecked || !locationChecked) {
-                alert('Please fill out all questions and input your age.');
+            if (!genderChecked || !sportsChecked || !locationChecked) {
+                alert('Please fill out all questions.');
                 return false;
             }
             return true;
