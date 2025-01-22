@@ -175,6 +175,7 @@
             //check form validity based on all questions
             function checkFormValidity() {
                 let valid = true;
+                let missingFields = false;
 
                 profileData.sports.forEach(({ sport }) => {
                     const minAgeInput = document.querySelector(`#${sport}-min-age-input`);
@@ -196,8 +197,13 @@
                         locationsSelected === 0
                     ) {
                         valid = false;
+                        missingFields = true;
                     }
                 });
+
+                if (missingFields) {
+                    alert("Please fill in all fields before submitting!");
+                }
 
                 // Enable/Disable submit button
                 document.getElementById('submit-button').disabled = !valid;
