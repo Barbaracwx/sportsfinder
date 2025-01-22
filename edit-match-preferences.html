@@ -217,7 +217,13 @@
                 });
 
                 localStorage.setItem('matchPreferences', JSON.stringify(preferences));
-                window.location.href = 'view-match-preferences.html';
+                
+                if (window.Telegram && Telegram.WebApp) {
+                    Telegram.WebApp.close();
+                } else {
+                    alert("This functionality is only available when the web app is opened through Telegram.");
+                }
+                
             });
         } else {
             // If no sports found, show a message
