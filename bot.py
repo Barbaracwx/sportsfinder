@@ -13,15 +13,12 @@ logging.basicConfig(level=logging.DEBUG)
 
 # Load environment variables from .env file
 load_dotenv()
-
-TOKEN = os.getenv("7537818430:AAFOt1K8xnYUOedx5gaFgvPAkFKUwA9FIdk")
-TOKEN = os.getenv("TOKEN")
+TOKEN = os.getenv("BOT_TOKEN")
 
 # Create the Application object
 application = Application.builder().token(TOKEN).build()
 
 # Database connection
-DATABASE_URL = os.getenv("postgres://u74paoavmds30r:pf5baba4878a23ad2fa9729b32256b75aa27c1aa49e4fad94e6243afd15ddfae1@c9tiftt16dc3eo.cluster-czz5s0kz4scl.eu-west-1.rds.amazonaws.com:5432/d196r0fv8p6tii")
 DATABASE_URL = os.getenv("DATABASE_URL")
 connection = psycopg2.connect(DATABASE_URL, sslmode='require')
 cursor = connection.cursor()
