@@ -132,10 +132,10 @@
             console.log("Look here");
             console.log(tg.initDataUnsafe);
             const chat_id = tg.initDataUnsafe.user.id;
-            if (!tg || !tg.initDataUnsafe || !tg.initDataUnsafe.user) {
-                alert(`This form must be submitted via Telegram Web App!!`);
-                //return;
-            }
+            // if (!tg || !tg.initDataUnsafe || !tg.initDataUnsafe.user) {
+            //     alert(`This form must be submitted via Telegram Web App!!`);
+            //     //return;
+            // }
             
             const sports = Array.from(document.querySelectorAll('input[name="sports"]:checked')).map(checkbox => {
                 const sport = checkbox.value;
@@ -150,26 +150,21 @@
                 sports: sports,
                 location: document.querySelector('input[name="location"]:checked')?.value || null
             };
-
+            
             try {
-                const response = await fetch('https://fba0-119-234-69-71.ngrok-free.app/submit', {
+                const response = await fetch('/submit-profile', {
                     method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify(profileData)
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify(profileData),
                 });
 
-                const data = await response.json();  // Parse the JSON response from the server
-
-                if (response.ok) {
-                    alert("Profile submitted successfully!");
-                    console.log("Success:", data);
-                    if (window.Telegram && Telegram.WebApp) {
-                        Telegram.WebApp.close();
-                    } else {
-                        alert("This functionality is only available when the web app is opened through Telegram.");
-                    }
+                const result = await response.json();
+                if (result.success) {
+                    alert('Profile submitted successfully!');
                 } else {
-                    throw new Error(data.error || "Failed to submit profile.");
+                    alert('Error submitting profile: ' + result.message);
                 }
             } catch (error) {
                 console.error("Error:", error);
