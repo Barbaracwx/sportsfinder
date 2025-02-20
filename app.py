@@ -1,32 +1,58 @@
+import os
+import psycopg2
 from flask import Flask, request, jsonify
-import logging
-from bot import handle_profile_data  # Import the function to process the data
+from flask_cors import CORS
+from dotenv import load_dotenv
+
+# Load environment variables
+load_dotenv()
 
 app = Flask(__name__)
+CORS(app)  # Allow frontend requests
 
-# Set up logging
-logging.basicConfig(level=logging.DEBUG)
+# Database Connection
+DATABASE_URL = os.getenv("DATABASE_URL")
 
-@app.route('/webhook', methods=['POST'])
-def webhook():
+def get_db_connection():
+    return psycopg2.connect(DATABASE_URL, sslmode="require")
+
+# API Route to Handle Form Submission
+@app.route('/submit', methods=['POST'])
+def submit_profile():
     try:
-        print("Received webhook POST request")
-        # Get the data sent to this endpoint (expecting JSON)
         data = request.get_json()
-        print("Data:", data)
-        
-        # Log the received data for debugging
-        logging.debug("Received Profile Data: %s", data)
-        
-        # Process the profile data (in bot.py)
-        handle_profile_data(data)
+        chat_id = data.get('chat_id')
+        age = data.get('age')
+        gender = data.get('gender')
+        location = data.get('location')
+        sports = data.get('sports')
 
-        return jsonify({"status": "success", "message": "Profile data received"}), 200
+        if not (chat_id and age and gender and location and sports):
+            return jsonify({"error": "Missing required fields"}), 400
+
+        # Connect to DB
+        conn = get_db_connection()
+        cur = conn.cursor()
+
+        # Insert user profile
+        cur.execute("INSERT INTO users (chat_id, age, gender, location) VALUES (%s, %s, %s, %s) RETURNING id",
+                    (chat_id, age, gender, location))
+        user_id = cur.fetchone()[0]
+
+        # Insert sports preferences
+        for sport in sports:
+            cur.execute("INSERT INTO user_sports (user_id, sport, skill) VALUES (%s, %s, %s)",
+                        (user_id, sport['sport'], sport['skill']))
+
+        conn.commit()
+        cur.close()
+        conn.close()
+
+        return jsonify({"message": "Profile submitted successfully!"}), 201
 
     except Exception as e:
-        logging.error(f"Error processing webhook data: {e}")
-        return jsonify({"status": "error", "message": "Failed to process data"}), 500
+        return jsonify({"error": str(e)}), 500
 
-# run the app
-if __name__ == "__main__":
-    app.run(host="0.0.0.0", port=int(os.environ.get("PORT", 8080)))
+# Run Flask App
+if __name__ == '__main__':
+    app.run(debug=True)

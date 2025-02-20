@@ -119,49 +119,56 @@
             return true;
         }
     
-        document.getElementById('submitButton').addEventListener('click', function(event) {
+        document.getElementById('submitButton').addEventListener('click', async function(event) {
             event.preventDefault();
             console.log("Submit button clicked");
 
-            if (validateForm()) {
-                const tg = window.Telegram.WebApp;
-                if (!tg.initDataUnsafe || !tg.initDataUnsafe.user) {
-                    alert("This form must be submitted via Telegram Web App.");
-                    return;
-                }
+            if (!validateForm()) {
+                alert("Please fill in all required fields correctly.");
+                return;
+            }
 
-                const chat_id = tg.initDataUnsafe.user.id;
-                const sports = Array.from(document.querySelectorAll('input[name="sports"]:checked')).map(checkbox => {
-                    const sport = checkbox.value;
-                    const skill = document.getElementById(`${sport.toLowerCase()}-skill`).value;
-                    return { sport, skill };
-                });
+            const tg = window.Telegram.WebApp;
 
-                const profileData = {
-                    chat_id: chat_id,
-                    age: document.getElementById('age').value,
-                    gender: document.querySelector('input[name="gender"]:checked').value,
-                    sports: sports,
-                    location: document.querySelector('input[name="location"]:checked').value
-                };
+            if (!tg || !tg.initDataUnsafe || !tg.initDataUnsafe.user) {
+                alert("This form must be submitted via Telegram Web App.");
+                return;
+            }
 
-                
-                fetch('https://8792-58-182-176-179.ngrok-free.app/webhook', {
+            const chat_id = tg.initDataUnsafe.user.id;
+            const sports = Array.from(document.querySelectorAll('input[name="sports"]:checked')).map(checkbox => {
+                const sport = checkbox.value;
+                const skill = document.getElementById(`${sport.toLowerCase()}-skill`).value;
+                return { sport, skill };
+            });
+
+            const profileData = {
+                chat_id: chat_id,
+                age: document.getElementById('age').value,
+                gender: document.querySelector('input[name="gender"]:checked')?.value || null,
+                sports: sports,
+                location: document.querySelector('input[name="location"]:checked')?.value || null
+            };
+
+            try {
+                const response = await fetch('http://127.0.0.1:5000/submit', {
                     method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json'
-                    },
+                    headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify(profileData)
-                })
-                .then(response => response.json())
-                .then(data => {
-                    console.log('Success:', data);
-                })
-                .catch((error) => {
-                    console.error('Error:', error);
                 });
-                
-                tg.close();
+
+                const data = await response.json();  // Parse the JSON response from the server
+
+                if (response.ok) {
+                    alert("Profile submitted successfully!");
+                    console.log("Success:", data);
+                    tg.close(); // Close WebApp only on success
+                } else {
+                    throw new Error(data.error || "Failed to submit profile.");
+                }
+            } catch (error) {
+                console.error("Error:", error);
+                alert("An error occurred while submitting your profile. Please try again.");
             }
         });
 
