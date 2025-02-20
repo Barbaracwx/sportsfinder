@@ -7,8 +7,7 @@ from telegram.ext import CommandHandler, Application
 # Load environment variables from .env file
 load_dotenv()
 
-TOKEN = os.getenv("7537818430:AAFOt1K8xnYUOedx5gaFgvPAkFKUwA9FIdk")
-TOKEN = os.getenv("TOKEN")
+TOKEN = os.getenv("BOT_TOKEN")
 
 # Create the Application object
 application = Application.builder().token(TOKEN).build()
