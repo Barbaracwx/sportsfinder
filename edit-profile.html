@@ -129,12 +129,12 @@
             }
 
             const tg = window.Telegram.WebApp;
-            // console.log("Look here");
-            // console.log(tg.initDataUnsafe);
-            // if (!tg || !tg.initDataUnsafe || !tg.initDataUnsafe.user) {
-            //     alert("This form must be submitted via Telegram Web App!!.");
-            //     return;
-            // }
+            console.log("Look here");
+            console.log(tg.initDataUnsafe);
+            if (!tg || !tg.initDataUnsafe || !tg.initDataUnsafe.user) {
+                alert("This form must be submitted via Telegram Web App!!.");
+                return;
+            }
             
             const chat_id = tg.initDataUnsafe.user.id;
             const sports = Array.from(document.querySelectorAll('input[name="sports"]:checked')).map(checkbox => {
@@ -152,7 +152,7 @@
             };
 
             try {
-                const response = await fetch('http://127.0.0.1:5000/submit', {
+                const response = await fetch('https://fba0-119-234-69-71.ngrok-free.app/submit', {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify(profileData)
