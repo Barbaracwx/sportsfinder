@@ -129,12 +129,12 @@
             }
 
             const tg = window.Telegram.WebApp;
-            console.log("Look here");
-            console.log(tg.initDataUnsafe);
-            if (!tg || !tg.initDataUnsafe || !tg.initDataUnsafe.user) {
-                alert("This form must be submitted via Telegram Web App!!.");
-                return;
-            }
+            // console.log("Look here");
+            // console.log(tg.initDataUnsafe);
+            // if (!tg || !tg.initDataUnsafe || !tg.initDataUnsafe.user) {
+            //     alert("This form must be submitted via Telegram Web App!!.");
+            //     return;
+            // }
             
             const chat_id = tg.initDataUnsafe.user.id;
             const sports = Array.from(document.querySelectorAll('input[name="sports"]:checked')).map(checkbox => {
