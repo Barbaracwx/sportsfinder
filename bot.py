@@ -1,83 +1,77 @@
 import os
 import psycopg2
-import json
-import aiohttp  # Use aiohttp for async requests
-import asyncio
 from dotenv import load_dotenv
 from telegram import Update, InlineKeyboardButton, InlineKeyboardMarkup
-from telegram.ext import CommandHandler, Application, CallbackContext
-from telegram.ext import MessageHandler, filters
-import logging
+from telegram.ext import CommandHandler, Application
 
-logging.basicConfig(level=logging.DEBUG)
-
-# Load environment variables
+# Load environment variables from .env file
 load_dotenv()
-TOKEN = os.getenv("BOT_TOKEN")
+
+TOKEN = os.getenv("7537818430:AAFOt1K8xnYUOedx5gaFgvPAkFKUwA9FIdk")
+TOKEN = os.getenv("TOKEN")
 
 # Create the Application object
 application = Application.builder().token(TOKEN).build()
 
 # Database connection
-DATABASE_URL = os.getenv("DATABASE_URL")
+DATABASE_URL = os.getenv("postgres://u74paoavmds30r:pf5baba4878a23ad2fa9729b32256b75aa27c1aa49e4fad94e6243afd15ddfae1@c9tiftt16dc3eo.cluster-czz5s0kz4scl.eu-west-1.rds.amazonaws.com:5432/d196r0fv8p6tii")
+DATABASE_URL = os.getenv("DATABASE_URL") 
 connection = psycopg2.connect(DATABASE_URL, sslmode='require')
 cursor = connection.cursor()
 
-# Confirm the database connection
+# Print the current database to confirm the connection
 cursor.execute("SELECT current_database();")
 current_database = cursor.fetchone()
 print(f"Connected to database: {current_database[0]}")
 
 # Function to start the bot
-async def start(update: Update, context: CallbackContext):
+async def start(update: Update, context):
     user_telegram_id = update.message.from_user.id
     user_first_name = update.message.from_user.first_name
 
-    try:
-        cursor.execute(
-            "INSERT INTO users (chat_id, name) VALUES (%s, %s) ON CONFLICT (chat_id) DO NOTHING",
-            (user_telegram_id, user_first_name)
-        )
-        connection.commit()
-        print(f"User {user_telegram_id} registered in database.")
+    keyboard = [
+        [
+            InlineKeyboardButton(
+                "My Profile",
+                web_app={'url': 'https://barbaracwx.github.io/sportsfinder/'}
+            )
+        ]
+    ]
 
-    except Exception as e:
-        connection.rollback()
-        print(f"Database error: {e}")
-
-    # Create a button to access the web app
-    keyboard = [[
-        InlineKeyboardButton("My Profile", web_app={'url': 'https://barbaracwx.github.io/sportsfinder/'})
-    ]]
     reply_markup = InlineKeyboardMarkup(keyboard)
-
     await update.message.reply_text(
-        f"Hello {user_first_name}, welcome to Sportsfinder!\n\n"
+        f"Hello there, {user_first_name} and welcome to Sportsfinder!\n\n"
         "Are you ready to find your sports partner?\n\n"
-        "Click the button below to set up your profile.",
+        "Click the button below to set up your profile", 
         reply_markup=reply_markup
     )
 
-async def set_webhook():
-    webhook_url = 'https://a6ec-137-132-26-143.ngrok-free.app/webhook'  # Your actual webhook URL
+# Function to register the user (store info in the database)
+async def register(update: Update, context):
+    chat_id = update.message.chat_id
+    user_name = ' '.join(context.args)
 
-    async with aiohttp.ClientSession() as session:
-        async with session.get(f'https://api.telegram.org/bot{TOKEN}/setWebhook', params={'url': webhook_url}) as response:
-            data = await response.json()
-            if data.get("ok"):
-                logging.info("Webhook set successfully!")
-            else:
-                logging.error(f"Failed to set webhook: {data}")
+    if user_name:
+        try:
+            # Insert user data into PostgreSQL database
+            cursor.execute("INSERT INTO users (chat_id, name) VALUES (%s, %s) ON CONFLICT (chat_id) DO NOTHING", (chat_id, user_name))
+            connection.commit()
 
-# Register the /start command
+            await update.message.reply_text(f"Hello {user_name}, you have been successfully registered!")
+        except Exception as e:
+            connection.rollback()
+            print(f"Error occurred while inserting user data: {e}")
+            await update.message.reply_text("There was an error while registering you. Please try again.")
+    else:
+        await update.message.reply_text("Please provide your name after the /register command. Example: /register John Doe")
+
+# Register the /start and /register commands
 start_handler = CommandHandler('start', start)
+register_handler = CommandHandler('register', register)
+
+# Add the handlers to the application
 application.add_handler(start_handler)
+application.add_handler(register_handler)
 
-# Main function to start the bot
-async def main():
-    await set_webhook()  # Ensure the webhook is properly set
-    logging.info("Bot is now waiting for incoming webhooks...")
-    await application.run_webhook(listen="0.0.0.0", port=8080, url_path=TOKEN)
-
-if __name__ == "__main__":
-    asyncio.run(main())  # Run the async bot properly
+# Start the bot
+application.run_polling()
