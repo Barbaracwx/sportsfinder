@@ -21,7 +21,7 @@ def get_db_connection():
 async def start(update: Update, context):
     user_telegram_id = update.message.from_user.id
     user_first_name = update.message.from_user.first_name or "Unknown"
-
+    print("HELLO!")
     # Store user info in the database if chat_id does not exist
     try:
         conn = get_db_connection()
@@ -33,6 +33,7 @@ async def start(update: Update, context):
         conn.commit()
         cur.close()
         conn.close()
+        print("Im here")
     except Exception as e:
         print(f"Database error: {e}")
 
