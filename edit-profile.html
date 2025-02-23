@@ -127,15 +127,6 @@
                 alert("Please fill in all required fields correctly.");
                 return;
             }
-
-            const tg = window.Telegram.WebApp;
-            console.log("Look here");
-            console.log(tg.initDataUnsafe);
-            const chat_id = tg.initDataUnsafe.user.id;
-            // if (!tg || !tg.initDataUnsafe || !tg.initDataUnsafe.user) {
-            //     alert(`This form must be submitted via Telegram Web App!!`);
-            //     //return;
-            // }
             
             const sports = Array.from(document.querySelectorAll('input[name="sports"]:checked')).map(checkbox => {
                 const sport = checkbox.value;
@@ -144,7 +135,7 @@
             });
 
             const profileData = {
-                chat_id: chat_id,
+                chat_id: Telegram.WebApp.initDataUnsafe.user.id,
                 age: document.getElementById('age').value,
                 gender: document.querySelector('input[name="gender"]:checked')?.value || null,
                 sports: sports,
@@ -152,7 +143,7 @@
             };
             
             try {
-                const response = await fetch('http://localhost:3000/submit-profile', {
+                const response = await fetch('http://localhost:5000/save-profile', {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json',
@@ -161,8 +152,9 @@
                 });
 
                 const result = await response.json();
-                if (result.success) {
+                if (result.message === "Profile saved successfully!") {
                     alert('Profile submitted successfully!');
+                    console.log("success");
                 } else {
                     alert('Error submitting profile: ' + result.message);
                 }
